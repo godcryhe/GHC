@@ -1,0 +1,500 @@
+{extend name="public:index"}
+{block name="title"}Add customer{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/index/bs/css/bootstrap.min.css">
+    <script stc="/index/bs/js/jquery.min.js"></script>
+    <script stc="/index/bs/js/holder.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn1.cloud-database.co/renderer/css/v1/renderer_416ed32e41febe1c1896fde18abdf6afab597bef.v1.min.css">
+    <script src="/index/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"
+          href="http://cdn2.editmysite.com/css/sites.css?buildTime=1529011779">
+
+</head>
+<body>
+<p class="aa"><a href="/customers/index">Customers</a>><a href="#">View Customer</a></p>
+<h4><b>View Customer</b></h4>
+
+
+<div id="knack-dist_2" class="kn-content">
+
+    <div class="kn-scene kn-container" id="kn-scene_52" style="display: block;">
+        <div class="kn-details kn-view view_97" id="view_97">
+            <div class="kn-details-column first" style="width: 50%; float: left;">
+                <div class="kn-details-group column-2">
+                    <div class="kn-details-group-column" style="width: 231px;">
+                        <table class="kn-label-left">
+                            <tbody>
+                            <tr class="field_1">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;">
+                                    <span>Customer ID</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->cust_no}</span>
+                                </td>
+                            </tr>
+                            <?php if($customer->cust_type === "IND"){?>
+                            <tr class="field_20">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;"><span>Last name</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->last_name}</span></td>
+                            </tr>
+
+                            <tr class="field_21">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;">
+                                    <span>First name</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->first_name}</span></td>
+                            </tr>
+
+                            <tr class="field_30">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;"><span>Initials</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->initials}</span></td>
+                            </tr>
+                            <?php } else {?>
+
+                            <tr class="field_21 ">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;">
+                                    <span>Business name</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->bus_name}</span></td>
+                            </tr>
+
+                            <tr class="field_296 ">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 102px;">
+                                    <span>Business documents</span></th>
+                                <td class="kn-value"><span></span></td>
+                            </tr>
+                            <?php }?>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column" >
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr>
+                                <td class="title" colspan="2"><span>Identification document</span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-2">
+
+                    <div class="kn-details-group-column" style="width: 262px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_41">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 120px;">
+                                    <span>Document type</span>
+                                </th>
+                                <td class="kn-value">
+                                    <span>{$customer->docType->name}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_39">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 120px;">
+                                    <span>Date of birth</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->date_of_birth}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_44">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 120px;">
+                                    <span>Expiration date</span></th>
+                                <td class="kn-value"><span>{$customer->expire_date}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_316">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 120px;">
+                                    <span><strong>ID Status</strong></span></th>
+                                <td class="kn-value">
+                                    <span><strong>{$customer->status}</strong></span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="kn-details-group-column" style="width: 296px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_43">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 142px;">
+                                    <span>Document number</span></th>
+                                <td class="kn-value"><span>{$customer->doc_no}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_42">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 142px;">
+                                    <span>Place of issue</span></th>
+                                <td class="kn-value"><span>{$customer->issue_place}</span></td>
+                            </tr>
+
+                            <tr class="field_158">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 142px;">
+                                    <span>ID Image 1/2</span>
+                                </th>
+                                <td class="kn-value"><span><a href="/customers/download/custNo/{$customer->cust_no}/fileName/{$customer->doc_file_1}" target="_top">{$customer->doc_file_1}</a></span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_259">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 142px;">
+                                    <span>ID Image 2/2</span>
+                                </th>
+                                <td class="kn-value"><span><a href="/customers/download/custNo/{$customer->cust_no}/fileName/{$customer->doc_file_2}" target="_top">{$customer->doc_file_2}</a></span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column" >
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr>
+                                <td class="title" colspan="2">
+                                    <span>Due diligence</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_40">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Occupation or principal business</span>
+                                </th>
+                                <td class="kn-value"><span style="white-space: pre-wrap;">{$customer->occupation}</span></td>
+                            </tr>
+
+                            <tr class="field_122">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;">
+                                    <span>Purpose and intended nature of the business relationship</span>
+                                </th>
+                                <td class="kn-value"><span style="white-space: pre-wrap;">{$customer->purpose}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_129">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Expected transaction frequency</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->frequency}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_130">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Average transaction amount</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->ave_amt}</span></td>
+                            </tr>
+
+                            <tr class="field_131">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;">
+                                    <span>Does the customer exhibit suspicious behavior?</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->sus_str}</span></td>
+                            </tr>
+
+                            <tr class="field_132">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Describe the suspicious behavior</span>
+                                </th>
+                                <td class="kn-value"><span style="white-space: pre-wrap;">{$customer->sus_behavior}</span></td>
+                            </tr>
+
+                            <tr class="field_305">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Is the customer PEP/HIO?</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->pep_str}</span></td>
+                            </tr>
+
+                            <tr class="field_314">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 262px;"><span>Business Relationship?</span>
+                                </th>
+                                <td class="kn-value"><span></span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="kn-details-column" style="width: 50%; float: left;">
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column" >
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr>
+                                <td class="title" colspan="2">
+                                    <span>Address</span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-2">
+
+                    <div class="kn-details-group-column" style="width: 264px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_31">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 137px;">
+                                    <span>Street address</span></th>
+                                <td class="kn-value"><span>{$customer->address}</span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_34">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 137px;">
+                                    <span>Province or state</span></th>
+                                <td class="kn-value"><span>{$customer->province}</span></td>
+                            </tr>
+
+                            <tr class="field_35">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 137px;">
+                                    <span>Postal or zip code</span></th>
+                                <td class="kn-value"><span>{$customer->postal_code}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="kn-details-group-column" style="width: 171px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_32">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 70px;"><span>City</span></th>
+                                <td class="kn-value"><span>{$customer->city}</span></td>
+                            </tr>
+
+                            <tr class="field_33">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 70px;"><span>Country</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->country}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column" >
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr>
+                                <td class="title" colspan="2">
+                                    <span>Phone and email</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-2">
+
+                    <div class="kn-details-group-column" style="width: 219px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_36">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 82px;"><span>Phone #1</span>
+                                </th>
+                                <td class="kn-value"><span><a
+                                        href="tel:778-886-3309">{$customer->phone1}</a></span>
+                                </td>
+                            </tr>
+
+                            <tr class="field_37">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 82px;"><span>Phone #2</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->phone2}</span></td>
+                            </tr>
+
+                            <tr class="field_163">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 82px;"><span>Email</span></th>
+                                <td class="kn-value"><span>{$customer->email}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="kn-details-group-column" style="width: 188px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_160">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 116px;">
+                                    <span>Phone #1 type</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->phone1_type}</span></td>
+                            </tr>
+
+                            <tr class="field_161">
+                                <th class="kn-label kn-detail-label"
+                                    style="width: 116px;">
+                                    <span>Phone #2 type</span>
+                                </th>
+                                <td class="kn-value"><span>{$customer->phone2_type}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr>
+                                <td class="title" colspan="2">
+                                    <span>Additional notes</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="kn-details-group column-1">
+
+                    <div class="kn-details-group-column" style="width: 554px;">
+                        <table class="kn-label-left">
+
+                            <tbody>
+                            <tr class="field_164">
+                                <td class="kn-value" colspan="2"
+                                    style="padding-left: 0px;"><span
+                                        style="padding-left: 0px;white-space: pre-wrap;">{$customer->comments}</span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+
+<p class="text-center">
+    <input type="button" onclick="window.history.back();" value="Back" class="btn btn-primary no-print"/>
+    <a class="btn btn-primary " style="text-decoration:none" href="/customers/edit/id/{$customer->cust_id}">Edit</a>
+    <a href="/customers/delete/id/{$customer->cust_id}" class="btn btn-primary " style="text-decoration:none">Delete</a>
+</p>
+
+
+</body>
+
+{/block}

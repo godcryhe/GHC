@@ -1,0 +1,83 @@
+{extend name="public:index"}
+{block name="title"}Financial Institutions{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .aa a {
+            color: blue;
+        }
+
+        .zz {
+            width: 450px;
+            height: 25px;
+            border: 1px solid #DCDCDC;
+        }
+
+        .zz:focus {
+            outline: none;
+            border: 1px solid #9BD6EB;
+        }
+
+        .bb {
+            margin: 10px 0px
+        }
+
+        .cc {
+            color: red;
+        }
+
+        .dd a {
+            color: blue;
+        }
+
+        .select {
+            width: 450px;
+            height: 25px;
+        }
+
+        .inp {
+            width: 100px;
+            height: 30px;
+            background-color: #17427A;
+            color: white;
+            border: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<p class="aa"><a href="/bank/index">Financial Institutions
+</a>><a href="/bank/update">Edit Financial Institution</a></p>
+<p></p>
+<h4><b>Add Financial Institution</b></h4>
+<form class="form form-horizontal" id="form-admin-add" action="/bank/update" method="post"
+      enctype="multipart/form-data">
+    <p><input type="hidden" name="id" class="zz" value="{$data['id']}"></p>
+    <p class="bb"><b>Name of the bank <span class="cc">*</span></b></p>
+    <p><input type="text" name="name" class="zz" value="{$data['name']}" required></p>
+    <p class="bb"><b>Street address <span class="cc">*</span></b></p>
+    <p><input type="text" name="street" class="zz" value="{$data['street']}" required></p>
+    <p class="bb"><b>City <span class="cc">*</span></b></p>
+    <p><input type="text" name="city" class="zz" value="{$data['city']}" required></p>
+    <p class="bb"><b>Province or state <span class="cc">*</span></b></p>
+    <p><input type="text" name="state" class="zz" value="{$data['province']}" required></p>
+    <p class="bb"><b>Country <span class="cc">*</span></b></p>
+    <p><input type="text" name="country" class="zz" value="{$data['country']}" required></p>
+    <p class="bb"><b>Postal or zip code <span class="cc">*</span></b></p>
+    <p><input type="text" name="code" class="zz" value="{$data['postal_code']}" required></p>
+    <p class="text-center">
+        <input type="button" onclick="window.history.back();" value="Back" class="btn btn-primary no-print"/>
+        <button class="btn btn-primary " type="submit">Submit</button>
+        <a href="/bank/delete/id/{$data['id']}" class="btn btn-primary " style="text-decoration:none">Delete</a>
+    </p>
+</form>
+</body>
+</html>
+    {/block}
+
+
+    {/block}

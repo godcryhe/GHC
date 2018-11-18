@@ -1,0 +1,71 @@
+{extend name="public:index"}
+{block name="title"}Transactions Report{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+</style>
+</head>
+<body>
+	<h4><b>Transactions</b></h4>
+    <div style="margin-top:20px">
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+	<thead class="panel panel-primary ">
+	<tr class="text-c">
+         <th width="50">Trans. Date</th> 
+         <th width="50">Trans. Number</th>
+         <th width="60">Transaction type</th>
+         <th width="50">IN</th>
+         <th width="50">Method IN</th>
+         <th width="30">OUT</th>
+         <th width="50">Method OUT</th>
+         <th width="50">CAD amount</th>
+         </tr>
+	  </thead>
+	  <tbody>
+	      {foreach name='data' item="row"}
+	    <tr class="text-c">
+	      <td>{$row['times']}</td>
+	      <td>{$row['number']}</td>
+	      <td>{$row['type']}</td>
+	      <td>{$row['received']}</td>
+	      <td>{$row['typex']}</td>
+	      <td>{$row['money']}</td>
+	      <td>{$row['typez']}</td>
+	      <td>{$row['moneys']}</td>
+	    </tr>
+	    {/foreach}
+	    </tbody>
+	  </table>
+	</div>
+<!--_footer 作为公共模版分离出去--> 
+  <script type="text/javascript" src="/index/lib/jquery/1.9.1/jquery.min.js"></script> 
+  <!--请在下方写此页面业务相关的脚本--> 
+  <script type="text/javascript" src="/index/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+  <script type="text/javascript" src="/index/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+  <!-- <script type="text/javascript" src="/index/lib/laypage/1.2/laypage.js"></script>  -->
+  <script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aLengthMenu":[1,2,3,4,5,6,7,8,9,10],
+	"sPaginationType":"full_numbers",
+	"aoColumnDefs": [
+	  // {"bVisible": false, "aTargets": [ 0 ]} //控制列的隐藏显示
+	  {"orderable":false}// 不参与排序的列
+	]
+});
+</script> 
+{/block}

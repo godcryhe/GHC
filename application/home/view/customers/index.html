@@ -1,0 +1,52 @@
+{extend name="public:index"}
+{block name="title"}Customers{/block}
+{block name="head"}
+<style>
+	.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+	.p a{text-decoration: none;color:#07467C;}
+	.h a{color:#0746A6;}
+	.red{background-color: red!important}
+	.yellow{background-color: #d3b100!important;}
+	.lv{background-color: #17b82c!important;}
+</style>
+{/block}
+{block name="index"}
+<span class="p"><a href="/customers/add">Add Customer</a></span>
+
+<div style="margin-top:20px">
+	<table class="table table-border table-bordered table-bg table-hover table-sort " text-align="center" id="idTblCust">
+		<thead class="panel panel-primary ">
+		<tr class="text-c">
+			<th >Customer ID</th>
+			<th >Customer type</th>
+			<th >Customer Name</th>
+			<th >Risk Rating</th>
+			<th >Street address</th>
+			<th >City</th>
+			<th >Province or state</th>
+			<th >Volume</th>
+			<th >ID Status</th>
+			<th >Details</th>
+		</tr>
+		</thead>
+		<tbody>
+		{foreach name='data' item="row"}
+		<tr class="text-c">
+			<td>{$row['cust_no']}</td>
+			<td>{$row['cust_type_str']}</td>
+			<td>{$row['formatted_cust_name']}</td>
+			<td class='static'>-- todo --</td>
+			<td>{$row['address']}</td>
+			<td>{$row['city']}</td>
+			<td>{$row['province']}</td>
+			<td>-- todo --</td>
+			<td class="static2 {$row->status_class}" >{$row->status}</td>
+			<td class="h"><a href="/customers/view/id/{$row['cust_id']}">View</a></td>
+		</tr>
+		{/foreach}
+		</tbody>
+	</table>
+</div>
+{/block}
+{block name="footer"}
+{/block}

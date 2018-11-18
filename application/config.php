@@ -37,17 +37,19 @@ return [
     // 默认JSONP处理方法
     'var_jsonp_handler'      => 'callback',
     // 默认时区
-    'default_timezone'       => 'PRC',
+    'default_timezone'       => 'America/Edmonton',
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
     'default_filter'         => '',
     // 默认语言
-    'default_lang'           => 'zh-cn',
+    'default_lang'           => 'en-us',
     // 应用类库后缀
     'class_suffix'           => false,
     // 控制器类后缀
     'controller_suffix'      => false,
+    // URL模式
+    'URL_MODEL'              => 2,
 
     // +----------------------------------------------------------------------
     // | 模块设置
@@ -58,7 +60,7 @@ return [
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     // 默认控制器名
-    'default_controller'     => 'Index',
+    'default_controller'     => 'index',
     // 默认操作名
     'default_action'         => 'index',
     // 默认验证器
@@ -122,8 +124,6 @@ return [
     'template'               => [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
-        // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
-        'auto_rule'    => 1,
         // 模板路径
         'view_path'    => '',
         // 模板后缀
@@ -171,6 +171,7 @@ return [
         'path'  => LOG_PATH,
         // 日志记录级别
         'level' => [],
+        'apart_level'   =>  ['error','sql'],
     ],
 
     // +----------------------------------------------------------------------
@@ -238,4 +239,5 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
 ];

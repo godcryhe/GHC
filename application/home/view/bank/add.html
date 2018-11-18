@@ -1,0 +1,78 @@
+{extend name="public:index"}
+{block name="title"}Financial Institutions{/block}
+{block name="index"}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .aa a {
+            color: blue;
+        }
+
+        .zz {
+            width: 450px;
+            height: 25px;
+            border: 1px solid #DCDCDC;
+        }
+
+        .zz:focus {
+            outline: none;
+            border: 1px solid #9BD6EB;
+        }
+
+        .bb {
+            margin: 10px 0px
+        }
+
+        .cc {
+            color: red;
+        }
+
+        .dd a {
+            color: blue;
+        }
+
+        .select {
+            width: 450px;
+            height: 25px;
+        }
+
+        .inp {
+            width: 100px;
+            height: 30px;
+            background-color: #17427A;
+            color: white;
+            border: 0px;
+        }
+    </style>
+    <link rel="stylesheet" href="/index/bs/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn1.cloud-database.co/renderer/css/v2/renderer_75135483540aaccb2eaa7a5faba92739f3cb510d.v2.min.css">
+</head>
+<body>
+<p class="aa"><a href="/bank/index">Customers</a>><a href="/bank/add">Add Financial Institution</a></p>
+<h4><b>Add Financial Institution</b></h4>
+<form class="form form-horizontal" id="form-admin-add" action="/bank/insert" method="post"
+      enctype="multipart/form-data">
+    <div class="kn-message is-error" style="display: none;"><a class="close delete"></a>
+    </div>
+    <p class="bb"><b>Name of the bank <span class="cc">*</span></b></p>
+    <p class="all" data="Name of the bank"><input type="text" name="name" class="zz" required></p>
+    <p class="bb"><b>Street address <span class="cc">*</span></b></p>
+    <p class="all" data="Street address"><input type="text" name="street" class="zz" required></p>
+    <p class="bb"><b>City <span class="cc">*</span></b></p>
+    <p class="all" data="City"><input type="text" name="city" class="zz" required></p>
+    <p class="bb"><b>Province or state <span class="cc">*</span></b></p>
+    <p class="all" data="Province or state"><input type="text" name="province" class="zz" required></p>
+    <p class="bb"><b>Country <span class="cc">*</span></b></p>
+    <p class="all" data="Country"><input type="text" name="country" class="zz" required></p>
+    <p class="bb"><b>Postal or zip code <span class="cc">*</span></b></p>
+    <p class="all" data="Postal or zip code"><input type="text" name="postal_code" class="zz" required></p>
+    <p class="text-center">
+        <input type="button" onclick="window.history.back();" value="Back" class="btn btn-primary no-print"/>
+        <button class="btn btn-primary " type="submit">Submit</button>
+    </p>
+</form>
+</body>
+{/block}

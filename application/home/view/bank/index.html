@@ -1,0 +1,70 @@
+{extend name="public:index"}
+{block name="title"}Financial Institutions{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        .p {
+            display: inline-block;
+            border-radius: 5px;
+            background-color: #EBEBEB;
+            margin-top: 30px;
+            height: 25px;
+        }
+
+        .p a {
+            text-decoration: none;
+            color: #07467C;
+        }
+
+        .h a {
+            color: #0746A6;
+        }
+    </style>
+</head>
+<body>
+
+<span class="p"><a href="/bank/add">Add Financial Institution</a></span>
+
+<div style="margin-top:20px">
+    <table class="table table-border table-bordered table-bg table-hover table-sort "
+           text-align="center" id="idTblFinInsit">
+        <thead class="panel panel-primary ">
+        <tr class="text-c">
+            <th >Name of the bank</th>
+            <th >Street address</th>
+            <th >City</th>
+            <th >Country</th>
+            <th >Province or state</th>
+            <th >Postal or zip code</th>
+            <th ></th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach name='data' item="row"}
+        <tr class="text-c">
+            <td>{$row['name']}</td>
+            <td>{$row['street']}</td>
+            <td>{$row['city']}</td>
+            <td>{$row['province']}</td>
+            <td>{$row['country']}</td>
+            <td>{$row['postal_code']}</td>
+            <td class="h"><a href="/bank/edit/id/{$row['id']}">Edit</a></td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+{/block}
+{block name="footer"}
+
+{/block}
+
+

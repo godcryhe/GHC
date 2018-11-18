@@ -1,0 +1,282 @@
+{extend name="public:index"}
+{block name="title"}{$pageTitle}{/block}
+{block name="head"}
+<style>
+
+</style>
+{/block}
+{block name="index"}
+<p class="aa no-print"><a href="/transactions/index">Transactions</a>><a href="#">{$pageTitle}</a></p>
+<h4><b>{$pageTitle}</b></h4>
+<img src="/img/header.png"/>
+<div id="transactionBlock" style="font-size: 18px">
+    <div class="container">
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Trans number
+            </div>
+            <div class="col mb-1">
+                {$data->trans_num}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Settlement date
+            </div>
+            <div class="col mb-1">
+                {$data->settlement_date}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Trans date
+            </div>
+            <div class="col mb-1">
+                {$data->trans_date}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Trans time
+            </div>
+            <div class="col mb-1">
+                {$data->trans_time}
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row" style="font-size: 22px">
+            <div class="col font-weight-bold">
+                We received
+            </div>
+            <div class="col font-weight-bold">
+                We disbursed
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Amount in
+            </div>
+            <div class="col mb-1">
+                {$data->amount_in_str}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Amount out
+            </div>
+            <div class="col mb-1">
+                {$data->amount_out}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Currency in
+            </div>
+            <div class="col mb-1">
+                {$data->curr_in}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Currency out
+            </div>
+            <div class="col mb-1">
+                {$data->curr_out}
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Method in
+            </div>
+            <div class="col mb-1">
+                {$data->method_in}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Method out
+            </div>
+            <div class="col mb-1">
+                {$data->method_out}
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Rate
+            </div>
+            <div class="col mb-1">
+                {$data->rate}
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row" style="font-size: 22px">
+            <div class="col-12 font-weight-bold">
+                Fees
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Fees
+            </div>
+            <div class="col mb-1">
+                {$data->fee}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Fees method
+            </div>
+            <div class="col mb-1">
+                {$data->fee_method}
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Sender
+            </div>
+            <div class="col mb-1">
+                {$data->sender->formatted_cust_name} - {$data->sender->cust_no}
+            </div>
+        </div>
+        <?php if ($data->has_sender_third === "true") {?>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Sender's third party
+            </div>
+            <div class="col mb-1">
+                {$data->sender_third->formatted_cust_name}
+            </div>
+        </div>
+        <?php }?>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Beneficiary
+            </div>
+            <div class="col mb-1">
+                {$data->ben->formatted_cust_name} - {$data->ben->cust_no}
+            </div>
+        </div>
+        <?php if ($data->has_ben_third === "true") {?>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Beneficiary's third party
+            </div>
+            <div class="col mb-1">
+                {$data->ben_third->formatted_cust_name}
+            </div>
+        </div>
+        <?php }?>
+    </div>
+</div>
+
+<?php if ($data->has_bank === "true") {?>
+<div id="bankBlock" style="font-size: 18px">
+    <div class="container">
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row" style="font-size: 22px">
+            <div class="col-12 font-weight-bold">
+                Financial institution
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Bank account number
+            </div>
+            <div class="col mb-1">
+                {$data->account_no}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Bank name
+            </div>
+            <div class="col mb-1">
+                {$data->bank->name}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Address
+            </div>
+            <div class="col mb-1">
+                {$data->bank->street}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                City
+            </div>
+            <div class="col mb-1">
+                {$data->bank->city}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Province
+            </div>
+            <div class="col mb-1">
+                {$data->bank->province}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Postal code
+            </div>
+            <div class="col mb-1">
+                {$data->bank->postal_code}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Country
+            </div>
+            <div class="col mb-1">
+                {$data->bank->country}
+            </div>
+        </div>
+    </div>
+</div>
+<?php }?>
+
+<p><br/></p>
+<p><br/></p>
+
+<p class="text-secondary" style="font-size: 16px">
+    I authorize {$data->company->reg_name} to transfer funds as shown on this invoice. I understand and agree that I am
+    responsible for the accuracy of the above information. {$data->company->reg_name} will
+    send the funds by any funds transfer payment system or intermediary bank at its discretion. I understand that there
+    is a fee associated with sending a wire transfer and that the funds
+    will be withdrawn from my account when the wire is sent. There is no right to cancel or amend the transfer order. If
+    the wire transfer request is cancelled, {$data->company->reg_name} will not credit funds
+    until {$data->company->reg_name} confirms all funds transmitted have been fully returned. {$data->company->reg_name} has no
+    obligation to re-execute any rejected or returned transfer order and will have no obligation
+    to pay interest on any cancelled, returned, or rejected transfer order. I declare that this transaction does not
+    relate to a politically exposed person or head of international organization.
+</p>
+<p><br/></p>
+<p><br/></p>
+<p class="text-secondary" style="font-size: 16px">
+Your signature is an acknowledgement that you read,
+understood and
+agree to be bound Client
+Signature:__________________________________________________<br>
+by the above disclosure and agreement.
+</p>
+
+<div class="kn-section-break"></div>
+<img src="/img/footer.png"/>
+
+<p class="text-center">
+    <input type="button" onclick="window.history.back();" value="Back" class="btn btn-primary no-print"/>
+    <input type="button" value="Print" onclick="window.print();" class="btn btn-primary no-print"/>
+    <!--<button class="btn btn-primary" type="submit">Cancel</button>-->
+</p>
+
+{/block}
+{block name="footer"}
+<script>
+
+
+</script>
+
+{/block}

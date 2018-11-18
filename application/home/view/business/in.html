@@ -1,0 +1,225 @@
+{extend name="public:index"}
+{block name="title"}Add customers{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+	.o{color:red;}
+	.da{float:left;}
+	.db{float:left;margin-left:80px;}
+	.dc{float:right;}
+	.clear{clear:both;}
+</style>
+</head>
+<body>
+	<p class="aa"><a href="/business/index">Business Relationships
+	</a>><a href="/business/in">View Customer Details</a></p>
+	<div class="da">
+	<h4><b>Basic information</b></h4>
+	<form class="form form-horizontal" id="form-admin-add" action="/index/insert" method="post" enctype="multipart/form-data">
+	<p class="bb"><b>Customer ID <span class="cc">*</span></b></p>
+	<p><input type="text" name="names"  class="zz" value="{$data['names']}" disabled="true"></p>
+	<p class="bb"><b>Last name  <span class="cc">*</span></b></p>
+	<p><input type="text" name="nam"  class="zz" value="{$data['nam']}" disabled="true"></p>
+	</div>
+	
+	<div class="db">
+	<h4>Address</h4>
+	<p class="bb"><b>Street address  <span class="cc">*</span></b></p>
+	<p><input type="text" name="street"  class="zz" value="{$data['street']}" disabled="true"></p>
+	<p class="bb"><b>Postal or zip code  <span class="cc">*</span></b></p>
+	<p><input type="text" name="code"  class="zz" value="{$data['code']}" disabled="true"></p>
+	<p class="bb"><b>City<span class="cc">*</span></b></p>
+	<p><input type="text" name="city"  class="zz" value="{$data['city']}" disabled="true"></p>
+	<p class="bb"><b>Country<span class="cc">*</span></b></p>
+	<p><input type="text" name="Country"  class="zz" value="{$data['country']}" disabled="true"></p>
+	<p class="bb"><b>Province or state<span class="cc">*</span></b></p>
+	<p><input type="text" name="state"  class="zz" value="{$data['state']}" disabled="true"></p>
+	</div>
+	
+	<div class="da">
+	<h4>Phone and email</h4>
+	<p class="bb"><b>Phone #1  <span class="cc">*</span></b></p>
+	<p><input type="text" name="phonea"  class="zz" value="{$data['phonea']}" disabled="true"></p>
+	<p class="bb"><b>Phone #1 type<span class="cc">*</span></b></p>
+	<p><select class="select" name="typea" size="1">
+        <option value="0" {if condition="$data['typea']==0"}selected{/if} disabled>Cell</option>
+        <option value="1" {if condition="$data['typea']==1"}selected{/if} disabled>Work</option>
+        <option value="2" {if condition="$data['typea']==2"}selected{/if} disabled>Home</option></select></p>
+    <p class="bb"><b>Phone #2 </b></p>
+	<p><input type="text" name="phoneb"  class="zz" value="{$data['phoneb']}" disabled="true"></p>
+	<p class="bb"><b>Phone #2 type</b></p>
+	<p><select class="select" name="typeb" size1">
+        <option value="0" {if condition="$data['typeb']==0"}selected{/if} disabled>Cell</option>
+        <option value="1" {if condition="$data['typeb']==1"}selected{/if} disabled>Work</option>
+        <option value="2" {if condition="$data['typeb']==2"}selected{/if} disabled>Home</option></select></p>
+    <p class="bb"><b>Email </b></p>
+	<p><input type="email" name="email"  class="zz" ></p>
+	<p class="bb"><b>ID Status</b></p>
+	<p><select class="select" name="status" size="1">
+        <option value="1" {if condition="$data['status']==1"}selected{/if} disabled>Valid</option>
+        <option value="2" {if condition="$data['status']==2"}selected{/if} disabled>EXPIRED!!!</option>
+        </select></p>
+    </div>
+	<div class="dc">
+    <h4>Identification document</h4>
+    <p class="bb"><b>Document number  <span class="cc">*</span></b></p>
+	<p><input type="text" name="number"  class="zz" value="{$data['number']}" disabled="true"></p>
+	<p class="bb"><b>Document type   <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_95-field_41" name="stype" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['stype']==1"}selected{/if} disabled>Driver's license</option>
+    
+        <option value="2" {if condition="$data['stype']==2"}selected{/if} disabled>Passport</option>
+    
+        <option value="3" {if condition="$data['stype']==3"}selected{/if} disabled>PR CARD</option>
+    
+        <option value="4" {if condition="$data['stype']==4"}selected{/if} disabled>Provincial Photo ID</option>
+    
+        <option value="5" {if condition="$data['stype']==5"}selected{/if} disabled>QUEBEC HEALTH CARD</option>
+    
+        <option value="6" {if condition="$data['stype']==6"}selected{/if} disabled>Business Corporation Act</option>
+    
+        <option value="7" {if condition="$data['stype']==7"}selected{/if} disabled>Citizenship Certificate</option>
+    
+        <option value="8" {if condition="$data['stype']==8"}selected{/if} disabled>OPERATOR'S LICENCE</option>
+    
+        <option value="9" {if condition="$data['stype']==9"}selected{/if} disabled>Identity Card of China</option>
+    
+    </select>
+	<p class="bb"><b>Date of birth  <span class="cc">*</span></b></p>
+	<p><input type="text" name="birth"  class="zz" value="{$data['birth']}" disabled="true"></p>
+	<p class="bb"><b>Expiration date  <span class="cc">*</span></b></p>
+	<p><input type="text" name="end"  class="zz" value="{$data['end']}" disabled="true"></p>
+	<p class="bb"><b>Place of issue  <span class="cc">*</span></b></p>
+	<p><input type="text" name="place"  class="zz" value="{$data['place']}" disabled="true"></p>
+	<p class="bb">IMPORTANT: Place of issue for passports MUST be entered as documented on the passport.</p>
+	<p>"Canada" is not adequate.</p>
+	<p class="bb"><b> ID Image 1/2</b></p>
+	<p><input type="file" name="pic1"   ></p>
+	<p class="bb"><b> ID Image 2/2</b></p>
+	<p><input type="file" name="pic2"   ></p>
+	<p class="bb"><b>Risk Rating</b></p>
+	<p><select class="select" name="rating" size="1">
+        <option value="1"  {if condition="$data['stype']==1"}selected{/if} disabled>Low</option>
+        <option value="2"  {if condition="$data['stype']==2"}selected{/if} disabled>In</option>
+        <option value="3"  {if condition="$data['stype']==3"}selected{/if} disabled>High</option>
+        </select></p>
+	</div>
+
+	<div class="da">
+	<h3>AML questions</h3>
+	<p><b>Occupation or principal business <span class="cc">*</span></b></p>
+	<p>i.e. high school teacher, airline pilot, construction worker</p>
+	<p><textarea rows="7" cols="100" name="typeq" value="{$data['typeq']}" disabled="true">{$data['typeq']}</textarea></p>
+	<p><b>Purpose and intended nature of the business relationship <span class="cc">*</span></b></p>
+	<p>i.e. supporting family in China</p>
+	<p><textarea rows="7" cols="100" name="typew" value="{$data['typew']}" disabled="true">{$data['typew']}</textarea></p>
+	<p><b>Expected transaction frequency  <span class="cc">*</span></b></p>
+	<p><input type="text" name="typee"  class="zz" value="{$data['typee']}" disabled="true"></p>
+	<p>i.e. monthly</p>
+	<p><b>Expected average transaction amount <span class="cc">*</span></b></p>
+	<p><input type="text" name="money"  class="zz" value="{$data['money']}" disabled="true"></p>
+	<p class="bb"><b>Does the customer have a 3rd party?</b></p>
+	<p><select class="select" name="typem" size="1">
+        <option value="1" {if condition="$data['typem']==1"}selected{/if} disabled>No</option>
+        <option value="2" {if condition="$data['typem']==2"}selected{/if} disabled>Yes</option></select></p>
+    <p class="bb"><b>Is the customer PEP/HIO?</b></p>
+	<p><select class="select" name="typeu" size="1">
+        <option value="1" {if condition="$data['typeu']==1"}selected{/if} disabled>No</option>
+        <option value="2" {if condition="$data['typeu']==2"}selected{/if} disabled>Yes</option></select></p>
+    <p class="bb"><b>Does the customer exhibit suspicious behavior?</b></p>
+	<p><select class="select" name="typer" size="1">
+        <option value="1"  {if condition="$data['typer']==1"}selected{typedisabled>No</option>
+        <option value="=2"  {if condition="$data['typer']==2"}selected{/if} disabled>Yes</option></select></p>
+    <p>Additional notes</p>
+	<p><textarea rows="7" cols="100" name="aname" value="{$data['aname']}" disabled="true">{$data['aname']}</textarea></p>
+	</div>
+	<div class="clear"></div>
+
+	<h3>Transactions</h3>
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+	<thead class="panel panel-primary ">
+	<tr class="text-c">
+		 <th width="60">Transaction type</th>
+         <th width="50">Trans. Date</th> 
+         <th width="50">Trans. Number</th>
+         <th width="50">IN</th>
+         <th width="50">Method IN</th>
+         <th width="30">OUT</th>
+         <th width="50">Method OUT</th>
+         <th width="50">CAD amount</th>
+         </tr>
+	  </thead>
+	  <tbody>
+	      {foreach name='dat' item="row"}
+	    <tr class="text-c">
+	      <td>{$row['type']}</td>
+	      <td>{$row['times']}</td>
+	      <td>{$row['number']}</td>
+	      <td>{$row['received']}</td>
+	      <td>{$row['typex']}</td>
+	      <td>{$row['money']}</td>
+	      <td>{$row['typez']}</td>
+	      <td>{$row['moneys']}</td>
+	    </tr>
+	    {/foreach}
+	    </tbody>
+	  </table>
+
+
+	<h3 style="margin-top:20px">FINTRAC Reports</h3>
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+	<thead class="panel panel-primary ">
+	<tr class="text-c">
+		 <th width="60">Report Number</th>
+         <th width="50">Report Date</th> 
+         <th width="50">Report Type</th>
+         <th width="50">Transaction ID</th>
+         <th width="50">Method IN</th>
+         <th width="30">Report</th>
+        </tr>
+	  </thead>
+	  <tbody>
+	      {foreach name='da' item="row"}
+	    <tr class="text-c">
+	      <td>{$row['number']}</td>
+	      <td>{$row['time']}</td>
+	      <td>{$row['type']}</td>
+	      <td>{$row['namex']}&nbsp;&nbsp;{$row['nam']}</td>
+	      <td>{$row['descibe']}</td>
+	     </tr>
+	    {/foreach}
+	    </tbody>
+	  </table>
+<!--_footer 作为公共模版分离出去--> 
+  <script type="text/javascript" src="/index/lib/jquery/1.9.1/jquery.min.js"></script> 
+  <!--请在下方写此页面业务相关的脚本--> 
+  <script type="text/javascript" src="/index/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+  <script type="text/javascript" src="/index/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+  <!-- <script type="text/javascript" src="/index/lib/laypage/1.2/laypage.js"></script>  -->
+  <script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aLengthMenu":[1,2,3,4,5,6,7,8,9,10],
+	"sPaginationType":"full_numbers",
+	"aoColumnDefs": [
+	  // {"bVisible": false, "aTargets": [ 0 ]} //控制列的隐藏显示
+	  {"orderable":false}// 不参与排序的列
+	]
+});
+</script> 
+</body>
+{/block}

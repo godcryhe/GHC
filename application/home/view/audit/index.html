@@ -1,0 +1,91 @@
+{extend name="public:index"}
+{block name="title"}Audit{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+<style>
+		.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+		.p a{text-decoration: none;color:#07467C;}
+    .h a{color:#0746A6;}
+    .c3{background-color: #c3daa4!important;}
+    .db{background-color: #bdebc1!important;}
+    .f5{background-color:#f5dbdb!important;}
+    .c2{background-color:#bd3bc1!important;}
+</style>
+</head>
+<body>
+	<h4><b>Review Dashboard</b></h4>
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+	<thead class="panel panel-primary ">
+	<tr class="text-c">
+         <th width="40">Date</th> 
+         <th width="30">Customer</th>
+         <th width="30"># of trx</th>
+         <th width="50">Amount IN</th>
+         <th width="50">Method IN</th>
+         <th width="50">Amount Out</th>
+         <th width="60">FINTRAC</th>
+         <th width="50">Status</th>
+         <th width="60">OSFI match? (Compliance)</th>
+         <th width="50">Report</th>
+         <th width="50">Notes</th>
+         </tr>
+	  </thead>
+	  <tbody>
+	      {foreach name='data' item="row"}
+	    <tr class="text-c">
+	      <td>{$row['times']}</td>
+	      <td>{$Think.session.islogin.username}</td>
+	      <td>{$row['typek']}</td>
+	      <td>{$row['received']}</td>
+	      <td class="static">{$row['typex']}</td>
+	      <td>{$row['charge']}</td>
+	      <td><a href="/tran/in/id/{$row['id']}">Report</a></td>
+	      <td class="static2">{$row['status']}</td>
+	      <td>{$row['typeo']}</td>
+	      <td>{$row['descibex']}</td>
+	      <td>{$row['descibec']}</td>
+	    </tr>
+	    {/foreach}
+	    </tbody>
+	  </table>
+<!--_footer 作为公共模版分离出去--> 
+  <script type="text/javascript" src="/index/lib/jquery/1.9.1/jquery.min.js"></script> 
+  <!--请在下方写此页面业务相关的脚本--> 
+  <script type="text/javascript" src="/index/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+  <script type="text/javascript" src="/index/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+  <!-- <script type="text/javascript" src="/index/lib/laypage/1.2/laypage.js"></script>  -->
+  <script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aLengthMenu":[1,2,3,4,5,6,7,8,9,10],
+	"sPaginationType":"full_numbers",
+	"aoColumnDefs": [
+	  // {"bVisible": false, "aTargets": [ 0 ]} //控制列的隐藏显示
+	  {"orderable":false}// 不参与排序的列
+	]
+});
+$("tbody tr").each(function(){
+  var html=$(this).find('.static').html();
+  var html2=$(this).find('.static2').html();
+  if(html=='Cash'){
+    $(this).find('.static').addClass('c3')     
+  }
+   if(html=='whire'){
+    $(this).find('.static').addClass('c2')     
+  }
+  if(html2=='Filed'){
+    $(this).find('.static2').addClass('db');
+  }
+  if(html2=='New'){
+    $(this).find('.static2').addClass('f5');
+  }
+})
+</script> 
+{/block}

@@ -1,0 +1,100 @@
+{extend name="public:index"}
+{block name="title"}home page{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+<style>
+		.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+		.p a{text-decoration: none;color:#07467C;}
+    .h a{color:#0746A6;}
+    .red{background-color: red!important}
+    .yellow{background-color: #d3b100!important;}
+    .lv{background-color: #17b82c!important;}
+</style>
+</head>
+<body>
+	
+  <span class="p"><a href="/home/add">Add Customer</a></span>
+ 
+  <div style="margin-top:20px">
+  <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+  <thead class="panel panel-primary ">
+  <tr class="text-c">
+         <th width="50">Customer ID</th> 
+         <th width="50">Customer type</th>
+         <th width="60">Customer Name</th>
+         <th width="50">Risk Rating</th>
+         <th width="50">Street address</th>
+         <th width="30">City</th>
+         <th width="60">Province or state</th>
+         <th width="30">Volume</th>
+         <th width="50">ID Status</th>
+         <th width="50">Details</th>
+        </tr>
+  </thead>
+  <tbody>
+      {foreach name='data' item="row"}
+    <tr class="text-c">
+      <td>{$row['names']}</td>
+      <td>{$row['type']}</td>
+      <td>{$row['namex']}&nbsp;&nbsp;{$row['nam']}</td>
+      <td class='static'>{$row['rating']}</td>
+      <td>{$row['street']}</td>
+      <td>{$row['city']}</td>
+      <td>{$row['state']}</td>
+      <td>{$row['money']}</td>
+      <td class="static2">{$row['status']}</td>
+      <td class="h"><a href="/home/in/id/{$row['id']}">view</a></td>
+    </tr>
+    {/foreach}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
+ <!--_footer 作为公共模版分离出去--> 
+  <script type="text/javascript" src="/index/lib/jquery/1.9.1/jquery.min.js"></script> 
+  <!--请在下方写此页面业务相关的脚本--> 
+  <script type="text/javascript" src="/index/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+  <script type="text/javascript" src="/index/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+  <script type="text/javascript" src="/index/lib/laypage/1.2/laypage.js"></script> 
+  <script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aLengthMenu":[1,2,3,4,5,6,7,8,9,10],
+	"sPaginationType":"full_numbers",
+	"aoColumnDefs": [
+	  // {"bVisible": false, "aTargets": [ 0 ]} //控制列的隐藏显示
+	  {"orderable":false}// 不参与排序的列
+	]
+});
+function getstatus(){
+  $("tbody tr").each(function(){
+  var html=$(this).find('.static').html();
+  var html2=$(this).find('.static2').html();
+  if(html=='Low'){
+    $(this).find('.static').addClass('lv')     
+  }
+  if(html=='Moderate'){
+    $(this).find('.static').addClass('yellow');
+  }
+  if(html=='High'){
+    $(this).find('.static').addClass('red');
+  }
+  if(html2=='EXPIRED!!!'){
+    $(this).find('.static2').addClass('red');
+  }
+})
+  
+}
+getstatus();
+setInterval("getstatus()",1000);
+
+</script> 
+{/block}

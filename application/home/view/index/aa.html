@@ -1,0 +1,147 @@
+{extend name="public:index"}
+{block name="title"}Add customers{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="/index/bs/css/bootstrap.min.css">
+	<script stc="/index/bs/js/jquery.min.js"></script>
+	<script stc="/index/bs/js/bootstrap.min.js"></script>
+	<script stc="/index/bs/js/holder.min.js"></script>
+	<link rel="stylesheet" href="https://cdn1.cloud-database.co/renderer/css/v2/renderer_75135483540aaccb2eaa7a5faba92739f3cb510d.v2.min.css">
+	<script src="/index/jquery-1.8.3.min.js"></script>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+	
+    .kn-modal-bg{
+    	display: block;
+    }
+	.none{
+		display: none!important;
+	}
+	.fllow{
+		position: absolute;
+		width: 50%;
+		right: 0;
+		top: -93px;
+		
+	}
+	.none{
+		display: none;
+	}
+	.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #f1d632;
+    background: #f9e67b url(images/ui-bg_inset-hard_100_f9e67b_1x100.png) 50% bottom repeat-x;
+    color: #363636;
+    margin-top: 0;
+    height: 100%;}
+    .clear{ clear:both} 
+</style>
+<body>
+	<form class="form form-horizontal" id="form-admin-add" action="/home/ins" method="post" enctype="multipart/form-data" >
+	<div class="kn-message is-error" style="display: none;margin-top:30px"><a class="close delete"></a>
+	</div>
+	<p><input type="hidden" name="id"  class="zz" value="{$id}"></p>
+	<p class="bb"><b>Relationship with customer  <span class="cc">*</span></b></p>
+	<p class="all" data='Street address '><input type="text" name="namea"  class="zz" ></p>
+	<p class="bb"><b>First name  <span class="cc">*</span></b></p>
+	<p class="all" data='Postal or zip code '><input type="text" name="nameb"  class="zz" ></p>
+	<p class="bb"><b>Last Name<span class="cc">*</span></b></p>
+	<p><input type="text" name="namec"  class="zz" ></p>
+	<p class="bb"><b>Initials</b></p>
+	<p class="all" data='Country'> <input type="text" name="named"  class="zz" ></p>
+	<p class="bb"><b>Street addresse</b></p>
+	<p><input type="text" name="namee"  class="zz" ></p>
+	<p class="bb"><b>City</b></p>
+	<p><input type="text" name="namef"  class="zz" ></p>
+	<p class="bb"><b>Province or state</b></p>
+	<p><input type="text" name="nameg"  class="zz" ></p>
+	<p class="bb"><b>Postal code</b></p>
+	<p><input type="text" name="nameh"  class="zz" ></p>
+	<p class="bb"><b>Country</b></p>
+	<p><input type="text" name="namei"  class="zz" ></p>
+	<p class="bb"><b>Date of birth</b></p>
+	<p><input type="text" name="namel"  class="zz" ></p>
+	<p class="bb"><b>Occupation</b></p>
+	<p><input type="text" name="namek"  class="zz" ></p>
+	<p class="bb"><b>ID Type</b></p>
+	<p><input type="text" name="city"  class="zz" ></p>
+	<p><button class="inp">submit</button></p>
+</form>
+<script>
+$(function(){
+	$('#bth').click(function(){
+	$('#kn-modal-bg-0').toggleClass('none');	
+	
+})
+$('.close-modal').click(function(){
+	$('#kn-modal-bg-0').toggleClass('none');	
+})
+}) 
+$('.inp').click(function(){
+	
+	if($('.form').attr('data')!='1'){
+		var html='';
+		$('.all').each(function(){
+			if($(this).find('input').val()==''){
+				var index=$(this).index();
+				index =index-1;
+				var html2=$(this).attr('data');
+				$('.kn-message').css('display','block');
+				html+=html2+" is required.</br>";
+				$('.kn-message').html(html);
+				$('.form').attr('data','1');
+				$(this).find('input').css('border','solid 1px red')
+			}else{
+				$(this).find('input').css('border','solid 1px #DCDCDC')
+			}
+		})
+		return false;
+	}
+})
+
+$('.select').click(function(){
+	console.log($(this).attr('selected'))
+	if($(this).val()=='2'){
+		$('.fllow').removeClass('none');
+		$('.goaw').addClass('none');
+		$('.goaw').eq(1).removeClass('all');
+		$('.goaw2').removeClass('none');
+		$('.goaw2').eq(1).addClass('all');
+		var height=$('.kn-message').height();
+		$('.fllow').css('top','-93px');
+	}else{
+		$('.fllow').addClass('none');
+		$('.goaw2').addClass('none');
+		$('.goaw2').eq(1).removeClass('all');
+		$('.goaw').removeClass('none');
+		$('.goaw').eq(1).addClass('all');
+	}
+})
+$('.select').click(function(){
+	console.log($(this).attr('selected'))
+	if($(this).val()=='4'){
+		$('.goa').removeClass('none');
+	}else{
+		$('.goa').addClass('none');
+	}
+})
+</script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $("#datepicker").datepicker();
+     $("#datepicker2").datepicker();
+  });
+  </script>
+</body>
+{/block}	

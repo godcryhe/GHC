@@ -1,0 +1,67 @@
+{extend name="public:index"}
+{block name="title"}Transactions{/block}
+{block name="head"}
+<style>
+    .p {
+        display: inline-block;
+        border-radius: 5px;
+        background-color: #EBEBEB;
+        margin-top: 30px;
+        height: 25px;
+    }
+
+    .p a {
+        text-decoration: none;
+        color: #07467C;
+    }
+
+    .h a {
+        color: #0746A6;
+    }
+</style>
+{/block}
+{block name="index"}
+<span class="p"><a href="/transactions/new">Add transaction</a></span>
+<div style="margin-top:20px">
+    <table class="table table-border table-bordered table-bg table-hover table-sort"
+           text-align="center" id="idTblTrans">
+        <thead class="panel panel-primary ">
+        <tr class="text-c">
+            <th >Trans.Date</th>
+            <th >Settlement Date</th>
+            <th >OSFI Match? (Teller)</th>
+            <th >Trans. Number</th>
+            <th >Type</th>
+            <th >Location</th>
+            <th >Customer</th>
+            <th >Amount IN</th>
+            <th >Rate</th>
+            <th >Amount OUT</th>
+            <th >Details</th>
+            <th >Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach name='data' item="row"}
+        <tr class="text-c">
+            <td>{$row['trans_date']}</td>
+            <td>{$row['settlement_date']}</td>
+            <td>{$row['osfi_match_str']}</td>
+            <td>{$row['trans_num']}</td>
+            <td>{$row['trans_type']}</td>
+            <td>{$row['location']}</td>
+            <td>{$row['customer']->cust_no.' '.$row['customer']->formatted_cust_name}</td>
+            <td>{$row['amount_in']}</td>
+            <td>{$row['rate']}</td>
+            <td>{$row['amount_out']}</td>
+            <td class="h"><a href="/transactions/view/id/{$row['trans_id']}">view</a></td>
+            <td class="h"><a href="/transactions/edit/id/{$row['trans_id']}">edit</a></td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+</div>
+{/block}
+{block name="footer"}
+
+{/block}

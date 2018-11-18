@@ -1,0 +1,237 @@
+{extend name="public:index"}
+{block name="title"}Transactions{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+    .dd{margin-top:10px;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+	.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+	.p a{text-decoration: none;color:#07467C;}
+     .o{color:red;}
+</style>
+</head>
+<body>
+	
+	<p><span class="p"><a href="/tran/add">Add Incoming EFT</a></span>
+  	<span class="p"><a href="/tran/ad">Add Outgoing EFT</a></span>
+  	<span class="p"><a href="/tran/dd">Add Currency Exchange</a></span>
+  	<span class="p"><a href="/tran/index">Generate Invoice</a></span></p>
+    <p><img src="/uploads/441134_orig.png"></p>
+	<h4><b>INVOICE</b></h4>
+	<form class="form form-horizontal" id="form-admin-add" action="/tran/insert" method="post" enctype="multipart/form-data">
+	<p><input type="hidden" name="id"  class="zz" value="{$data['id']}"  disabled></p>
+	<p class="bb"><b>Trans. Date <span class="cc">*</span></b></p>
+	<p><input type="text" name="start"  class="zz" value="{$data['times']}"  disabled></p>
+	<p class="bb"><b>Trans. Number <span class="cc">*</span></b></p>
+	<p><input type="text" name="number"  class="zz" value="{$data['number']}"  disabled></p>
+	<p class="bb"><b>Location  <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_274" name="place" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['place']==1"}selected{/if}  disabled>Select...</option>
+        <option value="2" {if condition="$data['place']==2"}selected{/if}  disabled>Windermere Road Office</option>
+    	<option value="3" {if condition="$data['place']==3"}selected{/if}  disabled>Branch on 97 St. NW</option>
+    	<option value="4" {if condition="$data['place']==4"}selected{/if}  disabled>Office on 106 St.</option>
+    </select></p>
+   
+	<p class="bb"><b>Customer type  <span class="cc">*</span></b></p>
+	<p><select class="select" name="typ" size="1">
+        <option value="1" {if condition="$data['typ']==1"}selected{/if}  disabled>Individual</option>
+        <option value="2" {if condition="$data['typ']==2 "}selected{/if}  disabled>Business</option></select></p>
+
+	<h4><b>Information about the funds we received as EFT</b></h4>
+	<p class="bb"><b>Bank of origin </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_274" name="origin" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['origin']==1"}selected{/if}  disabled>Select...</option>
+        <option value="2" {if condition="$data['origin']==2"}selected{/if}  disabled>Windermere Road Office</option>
+    	<option value="3" {if condition="$data['origin']==3"}selected{/if}  disabled>Branch on 97 St. NW</option>
+    	<option value="4" {if condition="$data['origin']==4"}selectedorigin  disabled>  disableOffice on 106 St.</option>
+    </select></p>
+    <p class="bb"><b>Bank account number </b></p>
+	<p><input type="text" name="account"  class="zz" value="{$data['account']}" disabled></p>
+	<p class="bb"><b>Currency received  <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_9" name="types" style="vertical-align: bottom;" class="select">
+		
+
+    	<option value="1" {if condition="$data['types']==1"}selected{/if} disabled>CAD</option>
+    
+        <option value="2" {if condition="$data['types']==2"}selected{/if} disabled>CNY</option>
+    
+        <option value="3" {if condition="$data['types']==3"}selected{/if} disabled>USD</option>
+    
+        <option value="4" {if condition="$data['types']==4"}selected{/if} disabled>NZD</option>
+    
+        <option value="5" {if condition="$data['types']==5"}selected{/if} disabled>HKD</option>
+    
+        <option value="6" {if condition="$data['types']==6"}selected{/if} disabled>SGP</option>
+    
+        <option value="7" {if condition="$data['types']==7"}selected{/if} disabled>AUD</option>
+    
+        <option value="8" {if condition="$data['types']==8"}selected{/if} disabled>EUR</option>
+    
+        <option value="9" {if condition="$data['types']==9"}selected{/if} disabled>GBP</option>
+    
+        <option value="10" {if condition="$data['types']==10"}selected{/if} disabled>GBP</option>
+    
+        <option value="11" {if condition="$data['types']==11"}selected{/if} disabled>GPD</option>
+    
+        <option value="12" {if condition="$data['types']==12"}selected{/if} disabled>MMM</option>
+    
+    </select></p>
+    <p class="bb"><b>Amount received </b></p>
+	<p><input type="text" name="received"  class="zz" value="{$data['received']}" disabled></p>
+    <p class="bb"><b>Received as </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_8" name="typex" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['typex']==1"}selected{/if} disabled>Cash</option>
+    
+        <option value="2" {if condition="$data['typex']==2"}selected{/if} disabled>Bank Transfer</option>
+    
+        <option value="3" {if condition="$data['typex']==3"}selected{/if} disabled>Bank Draft</option>
+    
+        <option value="4" {if condition="$data['typex']==4"}selected{/if} disabled>Bank Card</option>
+    
+        <option value="5" {if condition="$data['typex']==5"}selected{/if} disabled>Email Transfer</option>
+    
+        <option value="6" {if condition="$data['typex']==6"}selected{/if} disabled>Cheque</option>
+    
+        <option value="7" {if condition="$data['typex']==7"}selected{/if} disabled>Wire</option>
+    
+        <option value="8" {if condition="$data['typex']==8"}selected{/if} disabled>CASH+DEBIT</option>
+    
+        <option value="9" {if condition="$data['typex']==9"}selected{/if} disabled>CASH+DRAFT</option>
+    
+        <option value="10" {if condition="$data['typex']==10"}selected{/if} disabled>WECHAT</option>
+    
+    </select></p>  
+   
+
+	<h4><b>Funds we disbursed to the customer</b></h4>
+	<p class="bb"><b>Currency disbursed <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_14" name="typea" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['typea']==1"}selected{/if} disabled>AUD</option>
+    
+        <option value="2" {if condition="$data['typea']==2"}selected{/if} disabled>CAD</option>
+    
+        <option value="3" {if condition="$data['typea']==3"}selected{/if} disabled>CNY</option>
+    
+        <option value="4" {if condition="$data['typea']==4"}selected{/if} disabled>EUR</option>
+    
+        <option value="5" {if condition="$data['typea']==5"}selected{/if} disabled>GBP</option>
+    
+        <option value="6" {if condition="$data['typea']==6"}selected{/if} disabled>HKD</option>
+    
+        <option value="7" {if condition="$data['typea']==7"}selected{/if} disabled>MOP</option>
+    
+        <option value="8" {if condition="$data['typea']==8"}selected{/if} disabled>PHP</option>
+    
+        <option value="9" {if condition="$data['typea']==9"}selected{/if} disabled>TTD</option>
+    
+        <option value="10" {if condition="$data['typea']==10"}selected{/if} disabled>USD</option>
+    
+        <option value="11" {if condition="$data['typea']==11"}selected{/if} disabled>TWD</option>
+    
+        <option value="12" {if condition="$data['typea']==12"}selected{/if} disabled>JPY</option>
+    
+        <option value="13" {if condition="$data['typea']==13"}selected{/if} disabled>NZD</option>
+    
+    </select></p> 
+    <p class="bb"><b>Exchange rate <span class="cc">*</span></b></p>
+	<p><input type="text" name="rate"  class="zz" value="{$data['rate']}" disabled></p>
+	<p class="bb"><b>Amount disbursed <span class="cc">*</span></b></p>
+	<p><input type="text" name="money"  class="zz" value="{$data['money']}" disabled></p>
+    <p class="bb"><b>Status  <span class="cc">*</span></b></p>
+    <p><select data-placeholder="Select" id="view_50-field_274" name="status" style="vertical-align: bottom;" class="select">
+        <option value="New" {if condition="$data['status']==1"}selected{/if} disabled>New</option>
+        <option value="Assessed" {if condition="$data['status']==2"}selected{/if} disabled>Assessed</option>
+        <option value="Filed" {if condition="$data['status']==3"}selected{/if} disabled>Filed</option>
+    </select></p>
+	<p class="bb"><b>Disbursed as <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_13" name="typez" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['typez']==1"}selected{/if} disabled>Cash</option>
+        <option value="2" {if condition="$data['typez']==2"}selected{/if} disabled>Bank Transfer</option>
+    
+        <option value="3" {if condition="$data['typez']==3"}selected{/if} disabled>Bank Draft</option>
+    
+        <option value="4" {if condition="$data['typez']==4"}selected{/if} disabled>Bank Card</option>
+    
+        <option value="5" {if condition="$data['typez']==5"}selected{/if} disabled>Email Transfer</option>
+    
+        <option value="6" {if condition="$data['typez']==6"}selected{/if} disabled>Cheque</option>
+    
+        <option value="7" {if condition="$data['typez']==7"}selected{/if} disabled>Wire</option>
+    
+        <option value="8" {if condition="$data['typez']==8"}selected{/if} disabled>DEPOSIT</option>
+    
+        <option value="9" {if condition="$data['typez']==9"}selected{/if} disabled>WIRE + BANK DRAFT</option>
+    
+        <option value="10" {if condition="$data['typez']==10"}selected{/if} disabled>CASH+CHEQUE</option>
+    
+        <option value="11" {if condition="$data['typez']==11"}selected{/if} disabled>BANK DRAFT+CASH</option>
+    
+        <option value="12" {if condition="$data['typez']==12"}selected{/if} disabled>Bank transfer + cash</option>
+    
+        <option value="13" {if condition="$data['typez']==13"}selected{/if} disabled>TBD</option>
+    
+        <option value="14" {if condition="$data['typez']==14"}selected{/if} disabled>WE CHAT</option>
+    
+        <option value="15" {if condition="$data['typez']==15"}selected{/if} disabled>WeChat Transfer</option>
+    
+        <option value="16" {if condition="$data['typez']==16"}selected{/if} disabled>BANK DRAFT+CASH</option>
+    
+        <option value="17" {if condition="$data['typez']==17"}selected{/if} disabled>Alipay</option>
+    
+    </select></p>
+   
+
+
+	<h4><b>Fees charged</b></h4>
+	<p class="bb"><b>Amount received </b></p>
+	<p><input type="text" name="charge"  class="zz" value="{$data['charge']}" disabled></p>
+	<p class="bb"><b>Paid as </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_275" name="typek" style="vertical-align: bottom;" class="select">
+    	<option value="1" {if condition="$data['typek']==1"}selected{/if} disabled>Cash</option>
+    
+        <option value="2" {if condition="$data['typek']==2"}selected{/if} disabled>Bank Transfer</option>
+    
+        <option value="3" {if condition="$data['typek']==3"}selected{/if} disabled>Bank Draft</option>
+    
+        <option value="4" {if condition="$data['typek']==4"}selected{/if} disabled>Bank Card</option>
+    
+        <option value="5" {if condition="$data['typek']==5"}selected{/if} disabled>Email Transfer</option>
+    
+        <option value="6" {if condition="$data['typek']==6"}selected{/if} disabled>Cheque</option>
+    
+        <option value="7" {if condition="$data['typek']==7"}selected{/if} disabled>Wire</option>
+    
+        <option value="8" {if condition="$data['typek']==8"}selected{/if} disabled>BANK CARD + CASH</option>
+    
+    </select></p>
+    <p class="bb"><b>OSFI Match? </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_322" name="typeo" style="vertical-align: bottom;" class="select">
+    
+        <option value="1" {if condition="$data['typeo']==1"}selected{/if} disabled>Not reviewed</option>
+    
+        <option value="2" {if condition="$data['typeo']==2"}selected{/if} disabled>No</option>
+    
+        <option value="3" {if condition="$data['typeo']==3"}selected{/if} disabled>Yes</option>
+    
+    </select></p>
+    <p>I authorize Guang Hui Financial Inc. to transfer funds as shown on this invoice. I understand and agree that I am responsible for the accuracy of the above information. Guang Hui will 
+    send the funds by any funds transfer payment system or intermediary bank at its discretion. I understand that there is a fee associated with sending a wire transfer and that the funds 
+    will be withdrawn from my account when the wire is sent. There is no right to cancel or amend the transfer order. If the wire transfer request is cancelled, Guang Hui will not credit funds 
+    until Guang Hui confirms all funds transmitted have been fully returned. Guang Hui has no obligation to re-execute any rejected or returned transfer order and will have no obligation 
+    to pay interest on any cancelled, returned, or rejected transfer order. I declare that this transaction does not relate to a politically exposed person or head of international organization.</p>
+    <p style="margin-top:20px">Your signature is an acknowledgement that you read, understood and agree to be bound Client Signature:__________________________________________________________</p>
+    <p>by the above disclosure and agreement</p>
+    <P><img src="/uploads/footer-new_orig.png"></P>
+    <p><a href="/tran/index">Back to Recent transactions</a></p>
+{/block}

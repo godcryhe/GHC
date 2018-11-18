@@ -1,0 +1,63 @@
+{extend name="public:index"}
+{block name="title"}Transactions{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+	.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+	.p a{text-decoration: none;color:#07467C;}
+</style>
+</head>
+<body>
+	<p><span class="p"><a href="/tran/aa">Edit Sender</a></span>
+    <span class="p"><a href="/tran/bb">Edit Sender's Third Party</a></span>
+    <span class="p"><a href="/tran/cc">Edit Beneficiary</a></span>
+    <span class="p"><a href="/tran/ee">Edit Beneficiary's Third Party</a></span>
+ 	<span class="p"><a href="/bank/add">Edit Financial Institution</a></span></p>
+    <h4><b>Edit Beneficiary's Third Party</b></h4>
+	<form class="form form-horizontal" id="form-admin-add" action="/tran/ins" method="post" enctype="multipart/form-data">
+	<p class="bb"><b>Relationship with beneficiary <span class="cc">*</span></b></p>
+	<p><input type="text" name="aname"  class="zz" ></p>
+	<p class="bb"><b> Name  <span class="cc">*</span></b></p>
+	<p><input type="text" name="name"  class="zz" ></p>
+	<p class="bb"><b>Street address  </b></p>
+	<p><input type="text" name="street"  class="zz" ></p>
+	<p class="bb"><b>City  </b></p>
+	<p><input type="text" name="city"  class="zz" ></p>
+	<p class="bb"><b>Province or state </b></p>
+	<p><input type="text" name="state"  class="zz" ></p>
+	<p class="bb"><b>Postal or zip code </b></p>
+	<p><input type="text" name="code"  class="zz" ></p>
+	<p class="bb"><b>Country </b></p>
+	<p><input type="text" name="country"  class="zz" ></p>
+	<p class="bb"><b>Phone number </b></p>
+	<p><input type="text" name="phone"  class="zz" ></p>
+	<p class="bb"><b>Date of birth </b></p>
+	<p><input type="text" name="birth"  class="zz" ></p>
+	<p class="bb"><b>ID type</b></p>
+	<p><select data-placeholder="Select" id="view_292-field_64" name="type" style="vertical-align: bottom;" class="select">
+    
+        <option value="" selected=""></option>
+    
+        <option value="1">Driver's license</option>
+    
+        <option value="2">Passport</option>
+    
+    </select></p>
+	<p><input type="submit" value="submit" class="inp"></p>
+	<p class="dd"><a href="/tran/index">Back to Transaction Details</a></p>
+{/block}
+
+
+

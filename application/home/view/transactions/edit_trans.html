@@ -1,0 +1,1940 @@
+{extend name="public:index"}
+{block name="title"}{$pageTitle}{/block}
+{block name="head"}
+<style>
+
+</style>
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+    $(function () {
+        if ($("#custKey").length) {
+            $("#custKey").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchcustomer",
+                focus: function (event, ui) {
+                    $("#custKey").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#custKey").val(ui.item.label);
+                    $("#customer-description").html(ui.item.desc);
+                    $("#cust_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+
+
+        }
+
+        if ($("#senderKey").length) {
+            $("#senderKey").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchotherustomer",
+                focus: function (event, ui) {
+                    $("#senderKey").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#senderKey").val(ui.item.label);
+                    $("#sender-description").html(ui.item.label + " " + ui.item.desc);
+                    $("#sender_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+        }
+
+        if ($("#sender3rd").length) {
+            $("#sender3rd").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchotherustomer",
+                focus: function (event, ui) {
+                    $("#sender3rd").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#sender3rd").val(ui.item.label);
+                    $("#description-description").html(ui.item.label + " " + ui.item.desc);
+                    $("#sender3rd_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+        }
+
+        if ($("#benKey").length) {
+            $("#benKey").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchotherustomer",
+                focus: function (event, ui) {
+                    $("#benKey").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#benKey").val(ui.item.label);
+                    $("#ben-description").html(ui.item.label + " " + ui.item.desc);
+                    $("#ben_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+        }
+
+        if ($("#ben3rd").length) {
+            $("#ben3rd").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchotherustomer",
+                focus: function (event, ui) {
+                    $("#ben3rd").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#ben3rd").val(ui.item.label);
+                    $("#ben-3rd-description").html(ui.item.label + " " + ui.item.desc);
+                    $("#ben_3rd_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+        }
+
+
+        if ($("#financial_ins").length) {
+            $("#financial_ins").autocomplete({
+                minLength: 0,
+                source: "/transactions/searchbank",
+                focus: function (event, ui) {
+                    $("#financial_ins").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#financial_ins").val(ui.item.label);
+                    $("#fin-description").html(ui.item.label + " " + ui.item.desc);
+                    $("#insti_id").val(ui.item.value);
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "<br>" + item.desc + "</div>")
+                    .appendTo(ul);
+            };
+        }
+
+
+    });
+
+    $(function () {
+        $("#transDate").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        if ("{$pageMode}" == "new") {
+            $("#transDate").datepicker("setDate", new Date());
+        }
+        ;
+
+        $("#settleDate").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+        $('#transTime').timepicker({
+            'timeFormat': 'H:i:s'
+        });
+        if ("{$pageMode}" == "new") {
+            $('#transTime').timepicker("setTime", new Date());
+        }
+        ;
+
+        $("#sen_dob").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $("#sen_3rd_dob").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $("#ben_dob").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $("#ben_3rd_dob").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
+{/block}
+{block name="index"}
+<p class="aa"><a href="/transactions/index">Transactions</a>><span>{$pageTitle}</span></p>
+<h4><b>{$pageTitle}</b></h4>
+<form id="form-admin-add" action="{$action}" method="post"
+      enctype="multipart/form-data">
+    <!--Primary key-->
+    <?php if ($pageMode === "edit"){?>
+    <input id="trans_id" type="hidden" name="trans_id" value="{$data->trans_id}">
+    <?php }?>
+
+    <h4>Customer account</h4>
+    <?php if ($pageMode === "new"){?>
+    <ul class="kn-form-group columns kn-form-group-1">
+        <li class="kn-form-col column is-constrained">
+            <div class="kn-input kn-input-short_text control">
+                <label for="custKey" class="kn-label"><span>Select</span></label>
+                <div class="control">
+                    <input class="input" id="custKey" name="" type="text" value="" required>
+                    <input id="cust_id" name="cust_id" type="hidden">
+                    <p id="customer-description">You can enter customer's number or name to search</p>
+                </div>
+            </div>
+            <div class="kn-input kn-input-multiple_choice control">
+
+                <label for="custRole" class="kn-label"><span>Customer role:</span></label>
+
+                <div class="kn-select">
+                    <div class="kn-select">
+                        <select data-placeholder="Select" id="custRole" name="cust_role"
+                                style="vertical-align: bottom;" class="select">
+                            <option value="S">Sender</option>
+                            <option value="B">Beneficiary</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <?php }?>
+    <!--Customer account information-->
+    <?php if ($pageMode === "edit") {?>
+    <input type="hidden" name="cust_role" value="{$data->cust_role}">
+    <div class="container">
+        <div class="row">
+            <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Customer ID
+            </div>
+            <div class="col mb-1">
+                {$data->customer->cust_no}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Customer role
+            </div>
+            <div class="col mb-1">
+                {$data->cust_role_str}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Date of birth
+            </div>
+            <div class="col mb-1">
+                {$data->customer->date_of_birth}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Last name
+            </div>
+            <div class="col mb-1">
+                {$data->customer->last_name}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                First name
+            </div>
+            <div class="col mb-1">
+                {$data->customer->first_name}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Initials
+            </div>
+            <div class="col mb-1">
+                {$data->customer->initials}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Address
+            </div>
+            <div class="col-6 mb-1">
+                {$data->customer->address}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Postal code
+            </div>
+            <div class="col mb-1">
+                {$data->customer->postal_code}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                City
+            </div>
+            <div class="col mb-1">
+                {$data->customer->city}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Province
+            </div>
+            <div class="col mb-1">
+                {$data->customer->province}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Country
+            </div>
+            <div class="col mb-1">
+                {$data->customer->country}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Phone 1
+            </div>
+            <div class="col mb-1">
+                {$data->customer->phone1}({$data->customer->phone1_type})
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Phone 2
+            </div>
+            <div class="col mb-1">
+                <?php if($data->customer->phone2 != null){?>
+                {$data->customer->phone2}({$data->customer->phone2_type})
+                <?php }?>
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Email
+            </div>
+            <div class="col mb-1">
+                {$data->customer->email}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Document type
+            </div>
+            <div class="col mb-1">
+                {$data->customer->docType->name}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Document number
+            </div>
+            <div class="col mb-1">
+                {$data->customer->doc_no}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Expiration date
+            </div>
+            <div class="col mb-1">
+                {$data->customer->expire_date}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Place of issue
+            </div>
+            <div class="col mb-1">
+                {$data->customer->issue_place}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Frequency
+            </div>
+            <div class="col mb-1">
+                {$data->customer->frequency}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Average amount
+            </div>
+            <div class="col mb-1">
+                {$data->customer->ave_amt}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Occupation
+            </div>
+            <div class="col mb-1">
+                {$data->customer->occupation}
+            </div>
+            <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                Purpose
+            </div>
+            <div class="col-6 mb-1">
+                {$data->customer->purpose}
+            </div>
+        </div>
+    </div>
+    <?php }?>
+
+    &nbsp;
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-basic">Basic</a></li>
+            <li><a href="#tabs-amount">Amount</a></li>
+            <li><a href="#tabs-sender">Sender</a></li>
+            <li><a href="#tabs-beneficiary">Beneficiary</a></li>
+            <li><a href="#tabs-financial">Financial institution</a></li>
+            <li><a href="#tabs-amlQuestion">AML Question</a></li>
+        </ul>
+        <div id="tabs-basic">
+            <div class="container">
+                <div class="row align-items-end">
+                    <!--Transaction date-->
+                    <div class="col-3">
+                        <label for="transDate" class="kn-label">
+                            Trans. Date<span class="kn-required">*</span>
+                        </label>
+                        <!--TODO Apply input mask by RobinHerbots-->
+                        <input id="transDate" name="trans_date" type="text" class="input" value="{$data->trans_date}">
+                    </div>
+                    <!--Transaction time-->
+                    <div class="col-3">
+                        <label for="transTime" class="kn-label"></label>
+                        <input id="transTime" name="trans_time" type="text" class="input" value="{$data->trans_time}">
+                    </div>
+                    <!--Transaction NO-->
+                    <div class="col-6">
+                        <label for="transNo" class="kn-label">
+                            Trans. Number<span class="kn-required">*</span>
+                        </label>
+                        <input class="input" id="transNo" name="trans_num" type="text" value="{$data->trans_num}"
+                               readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Settlement date-->
+                    <div class="col">
+                        <label for="settleDate" class="kn-label">Settlement Date</label>
+                        <input id="settleDate" name="settlement_date" type="text" class="knack-date input control"
+                               value="{$data->settlement_date}">
+                    </div>
+                    <!--Location-->
+                    <div class="col">
+                        <label for="location" class="kn-label">Location<span class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="location" name="location"
+                                    style="vertical-align: bottom;" class="select">
+                                <?php if ($data->comp_id == 1){?>
+                                <option value="WP">WP</option>
+                                <option value="CT">CT</option>
+                                <?php }?>
+                                <?php if ($data->comp_id == 2){?>
+                                <option value="Markham">Markham</option>
+                                <?php }?>
+                                <?php if ($data->comp_id == 3){?>
+                                <option value="Thornhill">Thornhill</option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Transaction type-->
+                    <div class="col">
+                        <label for="transType" class="kn-label"><span>Transaction type</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="transType" name="trans_type"
+                                    style="vertical-align: bottom;"
+                                    class="select">
+                                <option value="" selected=""></option>
+                                <option value="EFTI">Incoming EFT</option>
+                                <option value="EFTO">Outgoing EFT</option>
+                                <option value="FX">Currency exchange</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--IB code-->
+                    <div class="col">
+                        <label for="IBCode" class="kn-label"><span>IB Code</span></label>
+                        <input class="input" id="IBCode" name="ib_code" type="text" value="{$data->ib_code}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="kn-section-break"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="tabs-amount">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h5>We received</h5>
+                    </div>
+                    <div class="col">
+                        <h5>We disbursed</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Received Currency-->
+                    <div class="col">
+                        <label for="recCurrency" class="kn-label"><span>Currency</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="recCurrency" name="curr_in"
+                                    style="vertical-align: bottom;" class="select">
+                                <option value="" selected=""></option>
+                                <option value="CAD">CAD</option>
+                                <option value="CNY">CNY</option>
+                                <option value="USD">USD</option>
+                                <option value="NZD">NZD</option>
+                                <option value="HKD">HKD</option>
+                                <option value="SGP">SGP</option>
+                                <option value="AUD">AUD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="GBP">GBP</option>
+                                <option value="GPD">GPD</option>
+                                <option value="MMM">MMM</option>
+                            </select>
+                        </div>
+                        <!--TODO-->
+                        <!--<a href="#" class="kn-add-option" title="Add a new option">-->
+                        <!--<i class="fa fa-plus-circle"></i> Add a new option-->
+                        <!--</a>                        -->
+                    </div>
+                    <!--Disbursed currency-->
+                    <div class="col">
+                        <label for="disbCurrency" class="kn-label">Currency<span class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="disbCurrency" name="curr_out"
+                                    style="vertical-align: bottom;" class="select">
+                                <option value="" selected=""></option>
+                                <option value="CAD">CAD</option>
+                                <option value="CNY">CNY</option>
+                                <option value="USD">USD</option>
+                                <option value="NZD">NZD</option>
+                                <option value="HKD">HKD</option>
+                                <option value="SGP">SGP</option>
+                                <option value="AUD">AUD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="GBP">GBP</option>
+                                <option value="GPD">GPD</option>
+                                <option value="MMM">MMM</option>
+                            </select>
+                        </div>
+                        <!--TODO-->
+                        <!--<a href="#" class="kn-add-option" title="Add a new option">-->
+                        <!--<i class="fa fa-plus-circle"></i> Add a new option-->
+                        <!--</a>                        -->
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Received amount-->
+                    <div class="col">
+                        <label for="rec_amount" class="kn-label"><span>Amount</span> <span class="kn-required">*</span></label>
+                        <div class="control">
+                            <input class="input" id="rec_amount" name="amount_in" type="text"
+                                   value="{$data->amount_in}">
+                        </div>
+                    </div>
+                    <!--Disbursed amount-->
+                    <div class="col">
+                        <label for="disb_amount" class="kn-label"><span>Amount</span> <span class="kn-required">*</span></label>
+                        <div class="control">
+                            <input class="input" id="disb_amount" name="amount_out" type="text"
+                                   value="{$data->amount_out}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Received method-->
+                    <div class="col">
+                        <label for="recMethod" class="kn-label"><span>Received as</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="recMethod" name="method_in"
+                                    style="vertical-align: bottom;"
+                                    class="select">
+                                <option value="" selected=""></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Bank Draft">Bank Draft</option>
+                                <option value="Bank Card">Bank Card</option>
+                                <option value="Email Transfer">Email Transfer</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Wire">Wire</option>
+                                <option value="WECHAT">WECHAT</option>
+                            </select>
+                        </div>
+                        <!--TODO-->
+                        <!--<a href="#" class="kn-add-option" title="Add a new option">-->
+                        <!--<i class="fa fa-plus-circle"></i> Add a new option-->
+                        <!--</a>-->
+                    </div>
+                    <!--Disbursed method-->
+                    <div class="col">
+                        <label for="disbMethod" class="kn-label"><span>Disbursed as</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="disbMethod" name="method_out"
+                                    style="vertical-align: bottom;"
+                                    class="select">
+                                <option value="" selected=""></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Bank Draft">Bank Draft</option>
+                                <option value="Bank Card">Bank Card</option>
+                                <option value="Email Transfer">Email Transfer</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Wire">Wire</option>
+                                <option value="WECHAT">WECHAT</option>
+                            </select>
+                        </div>
+                        <!--TODO-->
+                        <!--<a href="#" class="kn-add-option" title="Add a new option">-->
+                        <!--<i class="fa fa-plus-circle"></i> Add a new option-->
+                        <!--</a>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Description for received-->
+                    <div class="col">
+                        <label for="rec_desc" class="kn-label"><span>Description</span></label>
+                        <textarea class="kn-textarea" id="rec_desc"
+                                  name="method_in_notes">{$data->method_in_notes}</textarea>
+                    </div>
+                    <!--Description for disbursed-->
+                    <div class="col">
+                        <label for="disb_desc" class="kn-label"><span>Description</span></label>
+                        <textarea class="kn-textarea" id="disb_desc"
+                                  name="method_out_notes">{$data->method_out_notes}</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Exchange rate-->
+                    <div class="col">
+                        <label for="rate" class="kn-label"><span>Exchange rate</span> <span class="kn-required">*</span></label>
+                        <input class="input" id="rate" name="rate" type="text" value="{$data->rate}">
+                    </div>
+                    <!--CAD amount-->
+                    <div class="col">
+                        <label for="cad_amount" class="kn-label"><span>CAD amount</span> <span
+                                class="kn-required">*</span></label>
+                        <input class="input" id="cad_amount" name="cad_amount" type="text" value="{$data->cad_amount}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>Fees charged</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Fee amount-->
+                    <div class="col">
+                        <label for="fee_amount" class="kn-label"><span>Fee amount</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="control">
+                            <input class="input" id="fee_amount" name="fee" type="text" value="{$data->fee}">
+                        </div>
+                    </div>
+                    <!--Fee paid as-->
+                    <div class="col">
+                        <label for="feeMethod" class="kn-label"><span>Paid as</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="feeMethod" name="fee_method"
+                                    style="vertical-align: bottom;"
+                                    class="select">
+                                <option value="" selected=""></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Bank Draft">Bank Draft</option>
+                                <option value="Bank Card">Bank Card</option>
+                                <option value="Email Transfer">Email Transfer</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Wire">Wire</option>
+                                <option value="WECHAT">WECHAT</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Description for fee-->
+                    <div class="col">
+                        <label for="fee_desc" class="kn-label"><span>Description</span></label>
+                        <textarea class="kn-textarea" id="fee_desc" name="fee_notes">{$data->fee_notes}</textarea>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-sender">
+            <div id="senderBlock">
+                <h4>Sender</h4>
+                <input type="hidden" name="sender_id" value="{$data->sender_id}">
+                <div class="container">
+                    <div class="row">
+                        <!--Sender relationship-->
+                        <div class="col">
+                            <label for="sen_relation" class="kn-label"><span>Relationship with beneficiary</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_relation" name="sender_relation" type="text"
+                                   value="{$data->sender_relation}">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="senderOptions" value="exist" autocomplete="off" checked> Existing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="senderOptions" value="new" autocomplete="off"> New
+                    </label>
+                </div>
+                <div class="container" id="existSenderBlock">
+                    <!--Exist sender for new-->
+                    <?php if ($pageMode === "new") {?>
+                    <div class="row">
+                        <!--Sender-->
+                        <div class="col">
+                            <label for="senderKey" class="kn-label"><span>Sender</span></label>
+                            <input class="input" id="senderKey" name="" type="text" value="">
+                            <input id="sender_id" name="sender_id" type="hidden">
+                            <p id="sender-description">You can enter sender's name to search</p>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                    <?php }?>
+                    <div class="kn-section-break"></div>
+                    <!--Exist sender for edit-->
+                    <?php if ($pageMode === "edit") {?>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Last name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->last_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            First name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->first_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Initials
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->initials}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Address
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->sender->address}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Postal code
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->postal_code}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            City
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->city}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Province
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->province}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Country
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->country}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Phone
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->phone1}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Occupation
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->occupation}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Date of birth
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->date_of_birth}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document type
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender->docType->name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document number
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->sender->doc_no}
+                        </div>
+                    </div>
+
+                    <?php }?>
+                </div>
+                <div class="container none" id="newSenderBlock">
+                    <div class="row">
+                        <!--Sender first name-->
+                        <div class="col">
+                            <label for="sen_firstName" class="kn-label"><span>First name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_firstName" name="sen_first_name" type="text" value="">
+                        </div>
+                        <!--Sender last name-->
+                        <div class="col">
+                            <label for="sen_lastName" class="kn-label"><span>Last name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_lastName" name="sen_last_name" type="text" value="">
+                        </div>
+                        <!--Sender initials-->
+                        <div class="col">
+                            <label for="sen_init" class="kn-label"><span>Initials</span></label>
+                            <input class="input" id="sen_init" name="sen_initials" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender address-->
+                        <div class="col">
+                            <label for="sen_address" class="kn-label"><span>Address</span></label>
+                            <input class="input" id="sen_address" name="sen_address" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender city-->
+                        <div class="col">
+                            <label for="sen_city" class="kn-label"><span>City</span></label>
+                            <input class="input" id="sen_city" name="sen_city" type="text" value="">
+                        </div>
+                        <!--Sender province-->
+                        <div class="col">
+                            <label for="sen_province" class="kn-label"><span>Province</span></label>
+                            <input class="input" id="sen_province" name="sen_province" type="text" value="">
+                        </div>
+                        <!--Sender country-->
+                        <div class="col">
+                            <label for="sen_country" class="kn-label"><span>Country</span></label>
+                            <input class="input" id="sen_country" name="sen_country" type="text" value="">
+                        </div>
+                        <!--Sender postal code-->
+                        <div class="col">
+                            <label for="sen_postal" class="kn-label"><span>Postal code</span></label>
+                            <input class="input" id="sen_postal" name="sen_postal_code" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender phone-->
+                        <div class="col">
+                            <label for="sen_phone" class="kn-label"><span>Phone number</span></label>
+                            <input class="input" id="sen_phone" name="sen_phone1" type="text" value="">
+                        </div>
+                        <!--Sender occupation-->
+                        <div class="col">
+                            <label for="sen_occupation" class="kn-label"><span>Occupation</span></label>
+                            <input class="input" id="sen_occupation" name="sen_occupation" type="text" value="">
+                        </div>
+                        <!--Sender date of birth-->
+                        <div class="col">
+                            <label for="sen_dob" class="kn-label"><span>Date of birth</span></label>
+                            <input class="input" id="sen_dob" name="sen_date_of_birth" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender ID type-->
+                        <div class="col">
+                            <label for="sen_idType" class="kn-label"><span>ID type</span></label>
+                            <div class="kn-select">
+                                <select name="sen_doc_type" style="vertical-align: bottom;"
+                                        id="sen_idType"
+                                        class="select">
+                                    <option value=""></option>
+                                    {foreach name="idTypes" item="row"}
+                                    <option value="{$row['id']}">{$row['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <!--Sender ID number-->
+                        <div class="col">
+                            <label for="sen_idNum" class="kn-label"><span>ID Number</span></label>
+                            <input class="input" id="sen_idNum" name="sen_doc_no" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>Does sender has third party?</h4>
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="senderThirdParty" value="N" autocomplete="off" checked id="senderThirdNo">
+                    No
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="senderThirdParty" value="Y" autocomplete="off" id="senderThirdYes"> Yes
+                </label>
+            </div>
+            <div id="senThirdPartyBlock" class="none">
+                <div class="kn-section-break"></div>
+
+                <div class="container">
+                    <div class="row">
+                        <!--Sender 3rd relationship-->
+                        <div class="col">
+                            <label for="sen_3rd_relation" class="kn-label"><span>Relationship with sender</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_3rd_relation" name="sender_third_relation" type="text"
+                                   value="{$data->sender_third_relation}">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="sender3rdOptions" value="exist" autocomplete="off" checked> Existing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="sender3rdOptions" value="new" autocomplete="off"> New
+                    </label>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="container" id="existSender3rdBlock">
+                    <?php if($pageMode === "new" ){?>
+                    <div class="row">
+                        <!--Sender third party-->
+                        <div class="col">
+                            <label for="sender3rd" class="kn-label"><span>Sender's third party</span></label>
+                            <input class="input" id="sender3rd" name="" type="text" value="">
+                            <input id="sender3rd_id" name="sender_third_id" type="hidden">
+                            <p id="sender-3rd-description">You can enter sender's third party's name to search</p>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                    <?php }?>
+                    <?php if($pageMode === "edit" and ($data->has_sender_third === "true")){?>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Last name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->last_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            First name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->first_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Initials
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->initials}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Address
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->sender_third->address}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Postal code
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->postal_code}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            City
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->city}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Province
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->province}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Country
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->country}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Phone
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->phone1}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Occupation
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->occupation}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Date of birth
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->date_of_birth}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document type
+                        </div>
+                        <div class="col mb-1">
+                            {$data->sender_third->docType->name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document number
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->sender_third->doc_no}
+                        </div>
+                    </div>
+                    <?php }?>
+                </div>
+                <div class="container none" id="newSender3rdBlock">
+
+                    <div class="row">
+                        <!--Sender 3rd first name-->
+                        <div class="col">
+                            <label for="sen_3rd_firstName" class="kn-label"><span>First name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_3rd_firstName" name="sen_3rd_first_name" type="text" value="">
+                        </div>
+                        <!--Sender 3rd last name-->
+                        <div class="col">
+                            <label for="sen_3rd_lastName" class="kn-label"><span>Last name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="sen_3rd_lastName" name="sen_3rd_last_name" type="text" value="">
+                        </div>
+                        <!--Sender 3rd initials-->
+                        <div class="col">
+                            <label for="sen_3rd_init" class="kn-label"><span>Initials</span></label>
+                            <input class="input" id="sen_3rd_init" name="sen_3rd_initials" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender 3rd address-->
+                        <div class="col">
+                            <label for="sen_3rd_address" class="kn-label"><span>Address</span></label>
+                            <input class="input" id="sen_3rd_address" name="sen_3rd_address" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender 3rd city-->
+                        <div class="col">
+                            <label for="sen_3rd_city" class="kn-label"><span>City</span></label>
+                            <input class="input" id="sen_3rd_city" name="sen_3rd_city" type="text" value="">
+                        </div>
+                        <!--Sender 3rd province-->
+                        <div class="col">
+                            <label for="sen_3rd_province" class="kn-label"><span>Province</span></label>
+                            <input class="input" id="sen_3rd_province" name="sen_3rd_province" type="text" value="">
+                        </div>
+                        <!--Sender 3rd country-->
+                        <div class="col">
+                            <label for="sen_3rd_country" class="kn-label"><span>Country</span></label>
+                            <input class="input" id="sen_3rd_country" name="sen_3rd_country" type="text" value="">
+                        </div>
+                        <!--Sender 3rd postal code-->
+                        <div class="col">
+                            <label for="sen_3rd_postal" class="kn-label"><span>Postal code</span></label>
+                            <input class="input" id="sen_3rd_postal" name="sen_3rd_postal_code" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender 3rd phone-->
+                        <div class="col">
+                            <label for="sen_3rd_phone" class="kn-label"><span>Phone number</span></label>
+                            <input class="input" id="sen_3rd_phone" name="sen_3rd_phone1" type="text" value="">
+                        </div>
+                        <!--Sender 3rd occupation-->
+                        <div class="col">
+                            <label for="sen_3rd_occupation" class="kn-label"><span>Occupation</span></label>
+                            <input class="input" id="sen_3rd_occupation" name="sen_3rd_occupation" type="text" value="">
+                        </div>
+                        <!--Sender 3rd date of birth-->
+                        <div class="col">
+                            <label for="sen_3rd_dob" class="kn-label"><span>Date of birth</span></label>
+                            <input class="input" id="sen_3rd_dob" name="sen_3rd_date_of_birth" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Sender 3rd ID type-->
+                        <div class="col">
+                            <label for="sen_3rd_idType" class="kn-label"><span>ID type</span></label>
+                            <div class="kn-select">
+                                <select name="sen_3rd_doc_type" style="vertical-align: bottom;"
+                                        id="sen_3rd_idType"
+                                        class="select">
+                                    <option value=""></option>
+                                    {foreach name="idTypes" item="row"}
+                                    <option value="{$row['id']}">{$row['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <!--Sender 3rd ID number-->
+                        <div class="col">
+                            <label for="sen_idNum" class="kn-label"><span>ID Number</span></label>
+                            <input class="input" id="sen_3rd_idNum" name="sen_3rd_doc_no" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-beneficiary">
+            <div id="benBlock">
+                <h4>Beneficiary</h4>
+                <input type="hidden" name="ben_id" value="{$data->ben_id}">
+                <div class="container">
+                    <div class="row">
+                        <!--Beneficiary relationship-->
+                        <div class="col">
+                            <label for="ben_relation" class="kn-label"><span>Relationship with sender</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_relation" name="ben_relation" type="text"
+                                   value="{$data->ben_relation}">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="benOptions" value="exist" autocomplete="off" checked> Existing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="benOptions" value="new" autocomplete="off"> New
+                    </label>
+                </div>
+
+                <div class="container" id="existBenBlock">
+                    <?php if ($pageMode === "new") {?>
+                    <div class="row">
+                        <!--Beneficiary-->
+                        <div class="col">
+                            <label for="benKey" class="kn-label"><span>Beneficiary</span></label>
+                            <input class="input" id="benKey" name="" type="text" value="">
+                            <input id="ben_id" name="ben_id" type="hidden">
+                            <p id="ben-description">You can enter beneficiary's name to search</p>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                    <?php }?>
+                    <div class="kn-section-break"></div>
+                    <?php if ($pageMode === "edit") {?>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Last name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->last_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            First name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->first_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Initials
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->initials}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Address
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->ben->address}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Postal code
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->postal_code}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            City
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->city}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Province
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->province}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Country
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->country}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Phone
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->phone1}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Occupation
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->occupation}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Date of birth
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->date_of_birth}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document type
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben->docType->name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document number
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->ben->doc_no}
+                        </div>
+                    </div>
+
+                    <?php }?>
+                </div>
+                <div class="container none" id="newBenBlock">
+                    <div class="row">
+                        <!--Beneficiary first name-->
+                        <div class="col">
+                            <label for="ben_firstName" class="kn-label"><span>First name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_firstName" name="ben_first_name" type="text" value="">
+                        </div>
+                        <!--Beneficiary last name-->
+                        <div class="col">
+                            <label for="ben_lastName" class="kn-label"><span>Last name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_lastName" name="ben_last_name" type="text" value="">
+                        </div>
+                        <!--Beneficiary initials-->
+                        <div class="col">
+                            <label for="ben_init" class="kn-label"><span>Initials</span></label>
+                            <input class="input" id="ben_init" name="ben_initials" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary address-->
+                        <div class="col">
+                            <label for="ben_address" class="kn-label"><span>Address</span></label>
+                            <input class="input" id="ben_address" name="ben_address" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary city-->
+                        <div class="col">
+                            <label for="ben_city" class="kn-label"><span>City</span></label>
+                            <input class="input" id="ben_city" name="ben_city" type="text" value="">
+                        </div>
+                        <!--Beneficiary province-->
+                        <div class="col">
+                            <label for="ben_province" class="kn-label"><span>Province</span></label>
+                            <input class="input" id="ben_province" name="ben_province" type="text" value="">
+                        </div>
+                        <!--Beneficiary country-->
+                        <div class="col">
+                            <label for="ben_country" class="kn-label"><span>Country</span></label>
+                            <input class="input" id="ben_country" name="ben_country" type="text" value="">
+                        </div>
+                        <!--Beneficiary postal code-->
+                        <div class="col">
+                            <label for="ben_postal" class="kn-label"><span>Postal code</span></label>
+                            <input class="input" id="ben_postal" name="ben_postal_code" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary phone-->
+                        <div class="col">
+                            <label for="ben_phone" class="kn-label"><span>Phone number</span></label>
+                            <input class="input" id="ben_phone" name="ben_phone1" type="text" value="">
+                        </div>
+                        <!--Beneficiary occupation-->
+                        <div class="col">
+                            <label for="ben_occupation" class="kn-label"><span>Occupation</span></label>
+                            <input class="input" id="ben_occupation" name="ben_occupation" type="text" value="">
+                        </div>
+                        <!--Beneficiary date of birth-->
+                        <div class="col">
+                            <label for="ben_dob" class="kn-label"><span>Date of birth</span></label>
+                            <input class="input" id="ben_dob" name="ben_date_of_birth" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary ID type-->
+                        <div class="col">
+                            <label for="ben_idType" class="kn-label"><span>ID type</span></label>
+                            <div class="kn-select">
+                                <select name="ben_doc_type" style="vertical-align: bottom;"
+                                        id="ben_idType"
+                                        class="select">
+                                    <option value=""></option>
+                                    {foreach name="idTypes" item="row"}
+                                    <option value="{$row['id']}">{$row['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <!--Beneficiary ID number-->
+                        <div class="col">
+                            <label for="ben_idNum" class="kn-label"><span>ID Number</span></label>
+                            <input class="input" id="ben_idNum" name="ben_doc_no" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>Does beneficiary has third party?</h4>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="benThirdParty" value="N" autocomplete="off" checked> No
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="benThirdParty" value="Y" autocomplete="off"> Yes
+                </label>
+            </div>
+            <div id="benThirdPartyBlock" class="none">
+                <div class="kn-section-break"></div>
+                <div class="container">
+                    <div class="row">
+                        <!--Beneficiary 3rd relationship-->
+                        <div class="col">
+                            <label for="ben_3rd_relation"
+                                   class="kn-label"><span>Relationship with beneficiary</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_3rd_relation" name="ben_third_relation" type="text"
+                                   value="{$data->ben_third_relation}">
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="ben3rdOptions" value="exist" autocomplete="off" checked> Existing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="ben3rdOptions" value="new" autocomplete="off"> New
+                    </label>
+                </div>
+                <div class="kn-section-break"></div>
+                <div class="container" id="existBen3rdBlock">
+                    <?php if ($pageMode === "new") {?>
+                    <div class="row">
+                        <!--Beneficiary third party-->
+                        <div class="col">
+                            <label for="ben3rd" class="kn-label"><span>Beneficiary's third party</span></label>
+                            <input class="input" id="ben3rd" name="" type="text" value="">
+                            <input id="ben_3rd_id" name="ben_third_id" type="hidden">
+                            <p id="ben-3rd-description">You can enter beneficiary's third party's name to search</p>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                    <?php }?>
+                    <?php if($pageMode === "edit" and ($data->has_ben_third === "true")){?>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Last name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->last_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            First name
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->first_name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Initials
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->initials}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Address
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->ben_third->address}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Postal code
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->postal_code}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            City
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->city}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Province
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->province}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Country
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->country}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Phone
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->phone1}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Occupation
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->occupation}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Date of birth
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->date_of_birth}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document type
+                        </div>
+                        <div class="col mb-1">
+                            {$data->ben_third->docType->name}
+                        </div>
+                        <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                            Document number
+                        </div>
+                        <div class="col-6 mb-1">
+                            {$data->ben_third->doc_no}
+                        </div>
+                    </div>
+                    <?php }?>
+                </div>
+                <div class="container none" id="newBen3rdBlock">
+
+                    <div class="row">
+                        <!--Beneficiary 3rd first name-->
+                        <div class="col">
+                            <label for="ben_3rd_firstName" class="kn-label"><span>First name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_3rd_firstName" name="ben_3rd_first_name" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd last name-->
+                        <div class="col">
+                            <label for="ben_3rd_lastName" class="kn-label"><span>Last name</span><span
+                                    class="kn-required"> *</span></label>
+                            <input class="input" id="ben_3rd_lastName" name="ben_3rd_last_name" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd initials-->
+                        <div class="col">
+                            <label for="ben_3rd_init" class="kn-label"><span>Initials</span></label>
+                            <input class="input" id="ben_3rd_init" name="ben_3rd_initials" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary 3rd address-->
+                        <div class="col">
+                            <label for="ben_3rd_address" class="kn-label"><span>Address</span></label>
+                            <input class="input" id="ben_3rd_address" name="ben_3rd_address" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary 3rd city-->
+                        <div class="col">
+                            <label for="ben_3rd_city" class="kn-label"><span>City</span></label>
+                            <input class="input" id="ben_3rd_city" name="ben_3rd_city" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd province-->
+                        <div class="col">
+                            <label for="ben_3rd_province" class="kn-label"><span>Province</span></label>
+                            <input class="input" id="ben_3rd_province" name="ben_3rd_province" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd country-->
+                        <div class="col">
+                            <label for="ben_3rd_country" class="kn-label"><span>Country</span></label>
+                            <input class="input" id="ben_3rd_country" name="ben_3rd_country" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd postal code-->
+                        <div class="col">
+                            <label for="ben_3rd_postal" class="kn-label"><span>Postal code</span></label>
+                            <input class="input" id="ben_3rd_postal" name="ben_3rd_postal_code" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary 3rd phone-->
+                        <div class="col">
+                            <label for="ben_3rd_phone" class="kn-label"><span>Phone number</span></label>
+                            <input class="input" id="ben_3rd_phone" name="ben_3rd_phone1" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd occupation-->
+                        <div class="col">
+                            <label for="ben_3rd_occupation" class="kn-label"><span>Occupation</span></label>
+                            <input class="input" id="ben_3rd_occupation" name="ben_3rd_occupation" type="text" value="">
+                        </div>
+                        <!--Beneficiary 3rd date of birth-->
+                        <div class="col">
+                            <label for="ben_3rd_dob" class="kn-label"><span>Date of birth</span></label>
+                            <input class="input" id="ben_3rd_dob" name="ben_3rd_date_of_birth" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Beneficiary 3rd ID type-->
+                        <div class="col">
+                            <label for="ben_3rd_idType" class="kn-label"><span>ID type</span></label>
+                            <div class="kn-select">
+                                <select name="ben_3rd_doc_type" style="vertical-align: bottom;"
+                                        id="ben_3rd_idType"
+                                        class="select">
+                                    <option value=""></option>
+                                    {foreach name="idTypes" item="row"}
+                                    <option value="{$row['id']}">{$row['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <!--Beneficiary 3rd ID number-->
+                        <div class="col">
+                            <label for="ben_idNum" class="kn-label"><span>ID Number</span></label>
+                            <input class="input" id="ben_3rd_idNum" name="ben_3rd_doc_no" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-financial">
+            <h4>Financial institution</h4>
+            <div class="kn-section-break"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <label for="account_no" class="kn-label">Bank account number</label>
+                        <input class="input" id="account_no" name="account_no" type="text" value="{$data->account_no}">
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            <div class="kn-section-break"></div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="finOptions" value="exist" autocomplete="off" checked> Existing
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="finOptions" value="new" autocomplete="off"> New
+                </label>
+            </div>
+            <div class="kn-section-break"></div>
+            <div class="container" id="existFinBlock">
+                <?php if($pageMode === "new" ){?>
+                <div class="row">
+                    <!--Financial institution-->
+                    <div class="col">
+                        <label for="financial_ins" class="kn-label"><span>Financial institution</span></label>
+                        <input class="input" id="financial_ins" name="" type="text" value="">
+                        <input id="insti_id" name="insti_id" type="hidden">
+                        <p id="fin-description">You can enter financial's bank name or address to search</p>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <?php }?>
+                <?php if($pageMode === "edit" && ($data->insti_id != null)){?>
+                <div class="row">
+                    <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        Bank name
+                    </div>
+                    <div class="col mb-1">
+                        {$data->bank->name}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        Address
+                    </div>
+                    <div class="col-6 mb-1">
+                        {$data->bank->street}
+                    </div>
+                    <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        Postal code
+                    </div>
+                    <div class="col mb-1">
+                        {$data->bank->postal_code}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        City
+                    </div>
+                    <div class="col mb-1">
+                        {$data->bank->city}
+                    </div>
+                    <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        Province
+                    </div>
+                    <div class="col mb-1">
+                        {$data->bank->province}
+                    </div>
+                    <div class="col shadow-sm mb-1 bg-light rounded font-weight-bold">
+                        Country
+                    </div>
+                    <div class="col mb-1">
+                        {$data->bank->country}
+                    </div>
+                </div>
+                <?php }?>
+            </div>
+            <div class="container none" id="newFinBlock">
+                <div class="row">
+                    <!--Bank name-->
+                    <div class="col">
+                        <label for="fin_name" class="kn-label"><span>Bank name</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_name" name="bank_name" type="text" value="">
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--Financial institution address-->
+                    <div class="col">
+                        <label for="fin_address" class="kn-label"><span>Address</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_address" name="bank_street" type="text" value="">
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Financial institution city-->
+                    <div class="col">
+                        <label for="fin_city" class="kn-label"><span>City</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_city" name="bank_city" type="text" value="">
+                    </div>
+                    <!--Financial institution province-->
+                    <div class="col">
+                        <label for="fin_province" class="kn-label"><span>Province</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_province" name="bank_province" type="text" value="">
+                    </div>
+                    <!--Financial institution country-->
+                    <div class="col">
+                        <label for="fin_country" class="kn-label"><span>Country</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_country" name="bank_country" type="text" value="">
+                    </div>
+                    <!--Financial institution postal code-->
+                    <div class="col">
+                        <label for="fin_postal" class="kn-label"><span>Postal code</span><span
+                                class="kn-required"> *</span></label>
+                        <input class="input" id="fin_postal" name="bank_postal_code" type="text" value="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="tabs-amlQuestion">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <label for="osfi_match" class="kn-label"><span>OSFI match</span> <span
+                                class="kn-required">*</span></label>
+                        <div class="kn-select">
+                            <select data-placeholder="Select" id="osfi_match" name="osfi_match"
+                                    style="vertical-align: bottom;"
+                                    class="select">
+                                <option value="">Not reviewed</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <!--Source of funds-->
+                    <div class="col">
+                        <label for="source" class="kn-label"><span>Source of funds</span></label>
+                        <p class="kn-instructions">i.e. regular income, proceeds of lottery winnings, proceeds of a
+                            house sale</p>
+                        <textarea class="kn-textarea" id="source" name="source">{$data->source}</textarea>
+                    </div>
+                    <!--Purpose of transaction-->
+                    <div class="col">
+                        <label for="purpose" class="kn-label"><span>Purpose of transaction</span></label>
+                        <p class="kn-instructions">i.e. purchase of a house, supporting family</p>
+                        <textarea class="kn-textarea" id="purpose" name="purpose">{$data->purpose}</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="trans_desc" class="kn-label"><span>Description</span></label>
+
+                        <textarea class="kn-textarea" id="trans_desc" name="notes">{$data->notes}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kn-section-break"></div>
+    <p class="text-center">
+        <input type="button" onclick="window.history.back();" value="Cancel" class="btn btn-primary no-print"/>
+        <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+
+    </p>
+</form>
+{/block}
+{block name="footer"}
+<script>
+
+    $(function () {
+        if ("{$pageMode}" == "new") {
+            if ($("#custRole").val() == "S") {
+                $("#senderBlock").addClass("none");
+                $("#benBlock").removeClass("none");
+            } else {
+                $("#benBlock").addClass("none");
+                $("#senderBlock").removeClass("none");
+            }
+
+            // Set default value for transaction number when creating a new transaction
+            $("#transNo").val(formatTransNum());
+
+        } else {
+            if ("{$data->cust_role}" == "S") {
+                $("#senderBlock").addClass("none");
+                $("#benBlock").removeClass("none");
+            } else {
+                $("#benBlock").addClass("none");
+                $("#senderBlock").removeClass("none");
+            }
+        }
+    });
+
+    $("[name='senderOptions']").change(function () {
+        var value = $(this).val();
+        if (value == "exist") {
+            $("#newSenderBlock").addClass("none");
+            $("#existSenderBlock").removeClass("none");
+        } else {
+            $("#existSenderBlock").addClass("none");
+            $("#newSenderBlock").removeClass("none");
+        }
+    });
+
+    $("[name='senderThirdParty']").change(function () {
+        var value = $(this).val();
+        if (value == "Y") {
+            $("#senThirdPartyBlock").removeClass("none");
+        } else {
+            $("#senThirdPartyBlock").addClass("none");
+        }
+    });
+
+    $("[name='sender3rdOptions']").change(function () {
+        var value = $(this).val();
+        if (value == "exist") {
+            $("#newSender3rdBlock").addClass("none");
+            $("#existSender3rdBlock").removeClass("none");
+        } else {
+            $("#existSender3rdBlock").addClass("none");
+            $("#newSender3rdBlock").removeClass("none");
+        }
+    });
+
+    $("[name='benOptions']").change(function () {
+        var value = $(this).val();
+        if (value == "exist") {
+            $("#newBenBlock").addClass("none");
+            $("#existBenBlock").removeClass("none");
+        } else {
+            $("#existBenBlock").addClass("none");
+            $("#newBenBlock").removeClass("none");
+        }
+    });
+
+    $("[name='benThirdParty']").change(function () {
+        var value = $(this).val();
+        if (value == "Y") {
+            $("#benThirdPartyBlock").removeClass("none");
+        } else {
+            $("#benThirdPartyBlock").addClass("none");
+        }
+    });
+
+    $("[name='ben3rdOptions']").change(function () {
+        var value = $(this).val();
+        if (value == "exist") {
+            $("#newBen3rdBlock").addClass("none");
+            $("#existBen3rdBlock").removeClass("none");
+        } else {
+            $("#existBen3rdBlock").addClass("none");
+            $("#newBen3rdBlock").removeClass("none");
+        }
+    });
+
+    $("[name='finOptions']").change(function () {
+        var value = $(this).val();
+        if (value == "exist") {
+            $("#newFinBlock").addClass("none");
+            $("#existFinBlock").removeClass("none");
+        } else {
+            $("#existFinBlock").addClass("none");
+            $("#newFinBlock").removeClass("none");
+        }
+    });
+
+    $("#custRole").change(function () {
+        var value = $(this).val();
+        if (value == "S") {
+            $("#senderBlock").addClass("none");
+            $("#benBlock").removeClass("none");
+        } else {
+            $("#benBlock").addClass("none");
+            $("#senderBlock").removeClass("none");
+        }
+    });
+
+    $(function () {
+        if ("{$pageMode}" == "edit") {
+            $("#location").val('{$data->location}');
+            $("#transType").val('{$data->trans_type}');
+            $("#recCurrency").val('{$data->curr_in}');
+            $("#disbCurrency").val('{$data->curr_out}');
+            $("#recMethod").val('{$data->method_in}');
+            $("#disbMethod").val('{$data->method_out}');
+            $("#feeMethod").val('{$data->fee_method}');
+            $("#osfi_match").val('{$data->osfi_match}');
+
+            if ({$data->
+            has_sender_third
+        })
+            {
+                $("[name='senderThirdParty']").filter('[value="Y"]').trigger("click");
+            }
+
+            if ({$data->
+            has_ben_third
+        })
+            {
+                $("[name='benThirdParty']").filter('[value="Y"]').trigger("click");
+            }
+
+
+        }
+    });
+
+    $("#transDate").change(function () {
+        $("#transNo").val(formatTransNum());
+    })
+
+    $("#transTime").change(function () {
+        $("#transNo").val(formatTransNum());
+    })
+
+    function formatTransNum() {
+        var date = $("#transDate").datepicker("getDate");
+        var dateStr = $.datepicker.formatDate("yymmdd", date);
+        var time = $("#transTime").timepicker("getTime");
+        var timeStr = ('0' + time.getHours().toString()).slice(-2) + ('0' + time.getMinutes().toString()).slice(-2);
+        return "GHF_MK_" + dateStr + timeStr;
+    }
+
+</script>
+
+{/block}

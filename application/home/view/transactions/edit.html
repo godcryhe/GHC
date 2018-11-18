@@ -1,0 +1,177 @@
+{extend name="public:index"}
+{block name="title"}Transactions{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+	.p{display: inline-block;border-radius:5px;background-color:#EBEBEB;margin-top:30px;height:25px;}
+	.p a{text-decoration: none;color:#07467C;}
+</style>
+</head>
+<body>
+	<p class="aa"><a href="/tran/index">Transactions</a>><a href="/tran/add">Incoming EFT</a></p>
+	<span class="p"><a href="/tran/add">Add Incoming EFT</a></span>
+  	<span class="p"><a href="/tran/ad">Add Outgoing EFT</a></span>
+  	<span class="p"><a href="/tran/dd">Add Currency Exchange</a></span>
+  	<span class="p"><a href="/tran/index">Generate Invoice</a></span>
+	<h4><b>Incoming EFT</b></h4>
+	<form class="form form-horizontal" id="form-admin-add" action="/tran/update" method="post" enctype="multipart/form-data">
+	<p><input type="hidden" name="id"  class="zz" value="{$data['id']}"></p>
+	<p class="bb"><b>Trans. Date <span class="cc">*</span></b></p>
+	<p><input type="text" name="start"  class="zz" value="{$data['start']}"></p>
+	<p class="bb"><b>Settlement Date <span class="cc">*</span></b></p>
+	<p><input type="text" name="end"  class="zz" value="{$data['end']}"></p>
+	<p class="bb"><b>Trans. Number <span class="cc">*</span></b></p>
+	<p><input type="text" name="number"  class="zz" value="{$data['number']}"></p>
+	<p class="bb"><b>Location  <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_274" name="place" style="vertical-align: bottom;" class="select">
+    	<option value="0" {if condition="$data['place']==0"}selected{/if}>Select...</option>
+        <option value="1" {if condition="$data['place']==1"}selected{/if}>Windermere Road Office</option>
+    	<option value="2" {if condition="$data['place']==2"}selected{/if}>Branch on 97 St. NW</option>
+    	<option value="3" {if condition="$data['place']==3"}selected{/if}>Office on 106 St.</option>
+    </select></p>
+    <p class="bb"><b>IB Code <span class="cc">*</span></b></p>
+	<p><input type="text" name="code"  class="zz" value="{$data['code']}"></p>
+	<p class="bb"><b>Customer type  <span class="cc">*</span></b></p>
+	<p><select class="select" name="typ" size="1">
+        <option value="1">Individual</option>
+        <option value="2">Business</option></select></p>
+
+	<h4><b>Information about the funds we received as EFT</b></h4>
+	<p class="bb"><b>Bank of origin </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_274" name="origin" style="vertical-align: bottom;" class="select">
+    	 {foreach name="a" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name']}</option>
+        {/foreach}
+    </select></p>
+    <p class="bb"><b>Bank account number </b></p>
+	<p><input type="text" name="account"  class="zz" value="{$data['account']}"></p>
+	<p class="bb"><b>Currency received  <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_9" name="types" style="vertical-align: bottom;" class="select">
+		
+         {foreach name="b" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name1']}</option>
+        {/foreach}
+    </select></p>
+    <p class="bb"><b>Amount received </b></p>
+	<p><input type="text" name="received"  class="zz" value="{$data['received']}"></p>
+    <p class="bb"><b>Received as </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_8" name="typex" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+    	 {foreach name="c" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name']}</option>
+        {/foreach}
+    
+    </select></p>
+    <p>Description</p>
+	<p><textarea rows="7" cols="100" name="descibe" value="{$data['descibe']}">{$data['descibe']}</textarea></p>
+
+	<h4><b>Funds we disbursed to the customer</b></h4>
+	<p class="bb"><b>Currency disbursed <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_14" name="typea" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+    	 {foreach name="d" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name']}</option>
+        {/foreach}
+    
+    </select></p>
+    <p class="bb"><b>Exchange rate <span class="cc">*</span></b></p>
+	<p><input type="text" name="rate"  class="zz" value="{$data['rate']}"></p>
+	<p class="bb"><b>Amount disbursed <span class="cc">*</span></b></p>
+	<p><input type="text" name="money"  class="zz" value="{$data['money']}"></p>
+	<p class="bb"><b>Disbursed as <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_13" name="typez" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+    	 {foreach name="e" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name']}</option>
+        {/foreach}
+    
+    </select></p>
+    <p>Description</p>
+	<p><textarea rows="7" cols="100" name="descibes" value="{$data['descibes']}">{$data['descibes']}</textarea></p>
+
+	<h4><b>Fees charged</b></h4>
+	<p class="bb"><b>Amount received </b></p>
+	<p><input type="text" name="charge"  class="zz" value="{$data['charge']}"></p>
+	<p class="bb"><b>Paid as </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_275" name="typek" style="vertical-align: bottom;" class="select">
+    	 {foreach name="f" item="row"}
+        <option value="{$row['id']}" {if condition="$row['id']"}selected{/if} >{$row['name']}</option>
+        {/foreach}
+    
+    </select></p>
+    <p>Description</p>
+	<p><textarea rows="7" cols="100" name="descibea" value="{$data['descibea']}">{$data['descibea']}</textarea></p>
+
+	<h4><b>CAD Amount</b></h4>
+    <p class="bb"><b> <span class="cc">*</span></b></p>
+    <p><input type="text" name="moneys"  class="zz" value="{$data['moneys']}"></p>
+    <h4><b>Fees charged</b></h4>
+     <p><select data-placeholder="Select" id="view_50-field_274" name="status" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+        <option value="1" {if condition="$data['status']==1"}>New</option>
+        <option value="2" {if condition="$data['status']==2"}>Assessed</option>
+        <option value="3" {if condition="$data['status']==3"}>Filed</option>
+    </select></p>
+	
+     <p class="bb"><b>Transaction type  </b></p>
+    <p><select data-placeholder="Select" id="view_50-field_274" name="type" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+        <option value="1" {if condition="$data['type']==1"}selected{/if}>EFTI</option>
+        <option value="2" {if condition="$data['type']==2"}selected{/if}>FX</option>
+    </select></p>
+	
+	<p>This is the CAD equivalent of the transaction value. If the amount received or amount disbursed is in CAD, enter the same value here. If neither is in CAD, calculate the CAD value of the transaction and enter here</p>
+	<p class="bb"><b>OSFI Match? </b></p>
+	<p><select data-placeholder="Select" id="view_50-field_322" name="typeo" style="vertical-align: bottom;" class="select">
+        <option value="" selected=""></option>
+        <option value="1" {if condition="$data['typeo']==1"}selected{/if}>Not reviewed</option>
+    
+        <option value="2" {if condition="$data['typeo']==2"}selected{/if}>No</option>
+    
+        <option value="3" {if condition="$data['typeo']==3"}selectedtypeo>Yes</option>
+    
+    </select></p>
+    <p class="bb"><b> AML questions</b></p>
+	<p>Mandatory for EFTs over $5,000 CAD</p>
+	<p class="bb"><b> Source of Funds</b></p>
+	<p>i.e. regular income, proceeds of lottery winnings, proceeds of a house sale</p>
+	<p><textarea rows="7" cols="100" name="descibee" value="{$data['descibee']}">{$data['descibee']}</textarea></p>
+	<p class="bb"><b> Purpose of Transaction</b></p>
+	<p>i.e. purchase of a house, supporting family</p>
+	<p><textarea rows="7" cols="100" name="descibex" value="{$data['descibex']}">{$data['descibex']}</textarea></p>
+	<p>Additional notes</p>
+	<p><textarea rows="7" cols="100" name="descibec" value="{$data['descibec']}">{$data['descibec']}</textarea></p>
+	<p><input type="submit" value="submit" class="inp"></p>
+	<p class="dd"><a href="/tran/index">Back to Transactions</a></p>
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/block}

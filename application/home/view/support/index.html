@@ -1,0 +1,92 @@
+{extend name="public:index"}
+{block name="title"}Support{/block}
+{block name="index"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style>
+	.aa a{color:blue;}
+	.zz{width:450px;height:25px;border:1px solid #DCDCDC;}
+	.zz:focus{outline:none; border: 1px solid #9BD6EB;}
+	.bb{margin:10px 0px}
+	.cc{color:red;}
+	.dd a{color:blue;}
+	.select{width:450px;height:25px;}
+	.inp{width:100px;height:30px;background-color:#17427A;color:white;border:0px;}
+</style>
+</head>
+<body>
+	<h4><b>Create a new ticket</b></h4>
+	<form class="form form-horizontal" id="form-admin-add" action="/support/insert" method="post" enctype="multipart/form-data">
+	<p class="bb"><b>Issue   <span class="cc">*</span></b></p>
+	<p>Describe the technical issue or share your feedback with the developers</p>
+	<p><textarea rows="7" cols="100" name="descibe"></textarea></p>
+	<p class="bb"><b>Nature   <span class="cc">*</span></b></p>
+	<p><select data-placeholder="Select" id="view_50-field_322" name="type" style="vertical-align: bottom;" class="select">
+    
+        <option value="1">Design Improvement Request</option>
+    
+        <option value="2">Bug</option>
+    </select></p>
+    <p>A bug hinders the basic functionality of the system. It must be fixed. Otherwise, management cannot use the system. A bug compromises AML compliance. A design improvement request is a desired enhancement. If this issue is not addressed, system can still be used to meet the basic objectives. A design improvement request has no impact on AML compliance. Note: Bugs will be fixed on a timely manner. Design improvement requests will be addressed depending on the impact and the amount of work required. Some requests can be addressed right away and others can be postponed to a later time or not addressed.</p>
+    <p>File</p>
+    <p><input type="file" name="file"></p>
+    <p class="bb"><b>Nature   </b></p>
+	<p><select data-placeholder="Select" id="view_212-field_206" name="types" style="vertical-align: bottom;" class="select">
+    
+        <option value="Open" selected="">Open</option>
+    
+        <option value="Closed">Closed</option>
+   </select></p>
+    <p><input type="submit" value="submit" class="inp"></p>
+
+    <h4><b>Issue Log</b></h4>
+    <div style="margin-top:20px">
+	<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" text-align="center">
+	<thead class="panel panel-primary ">
+	<tr class="text-c">
+         <th width="50">Ticket number</th> 
+         <th width="50">Ticket date</th>
+         <th width="60">Created by</th>
+         <th width="50">Nature</th>
+         <th width="50">Issue</th>
+         <th width="30">Status</th>
+         <th width="60">Action</th>
+         </tr>
+	  </thead>
+	  <tbody>
+	      {foreach name='data' item="row"}
+	    <tr class="text-c">
+	      <td>{$row['id']}</td>
+	      <td>{$row['time']}</td>
+	      <td>{$Think.session.islogin.username}</td>
+	      <td>{$row['type']}</td>
+	      <td>{$row['descibe']}</td>
+	      <td>{$row['types']}</td>
+	      <td class="h"><a href="/support/edit/id/{$row['id']}">Update ticket</a></td>
+	    </tr>
+	    {/foreach}
+	    </tbody>
+	  </table>
+<!--_footer 作为公共模版分离出去--> 
+  <script type="text/javascript" src="/index/lib/jquery/1.9.1/jquery.min.js"></script> 
+  <!--请在下方写此页面业务相关的脚本--> 
+  <script type="text/javascript" src="/index/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+  <script type="text/javascript" src="/index/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+  <!-- <script type="text/javascript" src="/index/lib/laypage/1.2/laypage.js"></script>  -->
+  <script type="text/javascript">
+$('.table-sort').dataTable({
+	"aaSorting": [[ 1, "asc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"pading":false,
+	"aLengthMenu":[1,2,3,4,5,6,7,8,9,10],
+	"sPaginationType":"full_numbers",
+	"aoColumnDefs": [
+	  // {"bVisible": false, "aTargets": [ 0 ]} //控制列的隐藏显示
+	  {"orderable":false}// 不参与排序的列
+	]
+});
+</script> 
+{/block}
