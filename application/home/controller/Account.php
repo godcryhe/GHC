@@ -20,10 +20,10 @@ class Account extends Allow{
         $id=$request->param('id');
         //dump($id);exit;
          //数据插入
-        $data=$request->only(['name','username','passwords']);
+        $data=$request->only(['name','username','password']);
         //dump($data);exit;
          if(Db::table("users")->where('id',$id)->update($data)){
-            $this->redirect("/account/index/id/$id");
+            $this->redirect("/login/logout");
         }else{
             $this->error("Failure to modify","/account/index/id/$id");
         }
