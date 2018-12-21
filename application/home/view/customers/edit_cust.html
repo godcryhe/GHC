@@ -112,19 +112,20 @@
                                              required></p>
     <p class="bb"><b>Customer type <span class="cc">*</span></b></p>
     <div style="position: relative;">
-        <!--<select class="select" name="cust_type" size="1" id="idCustType" required>-->
-            <!--<option value="IND">Individual</option>-->
-            <!--<option value="BUS">Business</option>-->
-        <!--</select>-->
-        <input type="hidden" value="IND" name="cust_type">
-        Individual
+        <select class="select" name="cust_type" size="1" id="idCustType" required>-->
+            <option value="IND">Individual</option>
+            <option value="BUS">Business</option>
+        </select>
+        <!--<input type="hidden" value="IND" name="cust_type">-->
+        <!--Individual-->
         <div class="fllow none" id="divBusDoc">
             <label for="field_296" class="label kn-label"><span>Business documents</span></label>
             <div class="control">
                 <input id="field_296" class="file" name="field_296" type="hidden" value="5ac9c285e22ae01fa47a5f50">
                 <div class="kn-asset-current" style="background-color: rgba(255, 204, 153, 0);"></div>
                 <div class="kn-file-upload" style="">
-                    <input class="input is-file" id="field_296_upload" value="" type="file" name="files" data-url="">
+                    <a href="/customers/download/custNo/{$customer->cust_no}/fileName/{$customer->bus_file}" target="_top">{$customer->bus_file}</a>
+                    <input class="input is-file" id="idBusFile" value="{$customer->bus_file}" type="file" name="bus_file" data-url="">
                     <div class="kn-spinner" style="display: none;"></div>
                 </div>
             </div>
@@ -145,15 +146,15 @@
         <p class="bb goaw2 "><b>Business name <span class="cc">*</span></b></p>
         <p class=" goaw2 " data='Business name'><input type="text" name="bus_name" class="zz" id="idBusName" value="{$customer->bus_name}"></p>
         <p class="bb goaw2 "><b>Name in native alphabet </b></p>
-        <p class="goaw2 "><input type="text" name="native_name" class="zz" value="{$customer->native_name}"></p>
+        <p class="goaw2 "><input id="idNativeName" type="text" name="native_name" class="zz" value="{$customer->native_name}"></p>
     </div>
     <div id="divIndName">
         <p class="bb goaw"><b>Last name <span class="cc">*</span></b></p>
-        <p class="all goaw" data='Last name'><input type="text" name="last_name" class="zz"
+        <p class="all goaw" data='Last name'><input id="idLastName" type="text" name="last_name" class="zz"
                                                     value="{$customer->last_name}" required>
         </p>
         <p class="bb goaw"><b>First name <span class="cc">*</span></b></p>
-        <p class="all goaw" data='First name'><input type="text" name="first_name" class="zz"
+        <p class="all goaw" data='First name'><input id="idFirstName" type="text" name="first_name" class="zz"
                                                      value="{$customer->first_name}" required></p>
     </div>
 
@@ -220,7 +221,7 @@
         </select>
         <p>
 
-        <p><a id="linkAddIdType" style="color:blue">Add a new option</a></p>
+        <!--<p><a id="linkAddIdType" style="color:blue">Add a new option</a></p>-->
 
         <p class="bb"><b>Place of issue <span class="cc">*</span></b></p>
         <p class="all" data='Place of issue '><input type="text" name="issue_place" class="zz"
@@ -330,14 +331,28 @@
             $('#divBusDoc').removeClass('none');
             $('#divBusName').removeClass('none');
             $('#divIndName').addClass('none');
+
             $('.fllow').css('top', '-93px');
-            $('#idBusName').attr('required','required');
+
+            $('#idFirstName').val(null);
+            $('#idFirstName').removeAttr('required');
+            $('#idLastName').val(null);
+            $('#idLastName').removeAttr('required');
+            $('#idBusName').attr('required', '');
+            $('#idBusFile').attr('required', '');
 
         } else {
             $('#divBusDoc').addClass('none');
             $('#divBusName').addClass('none');
             $('#divIndName').removeClass('none');
+
+            $('#idBusName').val(null);
             $('#idBusName').removeAttr('required');
+            $('#idBusFile').removeAttr('required');
+            $('#idNativeName').val(null);
+
+            $('#idFirstName').attr('required', '');
+            $('#idLastName').attr('required', '');
         }
     })
     $('#idSus').change(function () {

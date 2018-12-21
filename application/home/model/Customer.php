@@ -128,5 +128,9 @@ class Customer extends Model
         return ROOT_PATH . 'public' . DS . 'uploads'. DS . $data['cust_no'] . DS . $data['doc_file_2'];
     }
 
+    public function getBusFileAddrAttr($value,$data){
+        return ROOT_PATH . 'public' . DS . 'uploads'. DS . $data['cust_no'] . DS . $data['bus_file'];
+    }
+
 }
 
