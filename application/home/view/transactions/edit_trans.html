@@ -1635,6 +1635,7 @@
                 </div>
                 <?php }?>
                 <?php if($pageMode === "edit" && ($data->insti_id != null)){?>
+                <input type="hidden" value="{$data->insti_id}" name="insti_id"/>
                 <div class="row">
                     <div class="col-2 shadow-sm mb-1 bg-light rounded font-weight-bold">
                         Bank name
